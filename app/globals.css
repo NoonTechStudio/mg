@@ -1,26 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Brand colors */
+  --color-navy: #0D1F3C;
+  --color-navy-dark: #060F1E;
+  --color-navy-light: #1A3461;
+  --color-blue-brand: #2E86DE;
+  --color-teal-brand: #00C9A7;
+  --color-surface: #F0F4FA;
+  --color-mid-text: #4A6080;
+  --color-muted: #8A9BB0;
+
+  /* Typography */
+  --font-sans: "Inter", sans-serif;
+  --font-heading: "Plus Jakarta Sans", sans-serif;
+
+  /* Animations */
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-marquee-reverse: marquee-reverse 30s linear infinite;
+  --animate-fade-up: fadeUp 0.6s ease-out forwards;
+  --animate-counter: countUp 0.5s ease-out forwards;
+  --animate-slide-in: slideIn 0.3s ease-out forwards;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Grid background patterns */
+.grid-dots-bg {
+  background-image: radial-gradient(circle, rgba(46, 134, 222, 0.12) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.grid-lines-bg {
+  background-image:
+    linear-gradient(to right, rgba(46, 134, 222, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(46, 134, 222, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
+.grid-lines-dark {
+  background-image:
+    linear-gradient(to right, rgba(46, 134, 222, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(46, 134, 222, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Meridian arc decoration */
+.meridian-arc {
+  position: absolute;
+  border: 1.5px dashed rgba(0, 201, 167, 0.15);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Marquee animations */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.marquee-track {
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-track-reverse {
+  animation: marquee-reverse 30s linear infinite;
+}
+
+.marquee-track:hover,
+.marquee-track-reverse:hover {
+  animation-play-state: paused;
+}
+
+/* Fade-up animation */
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.6s ease-out forwards;
+}
+
+/* Counter animation */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Slide in */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0D1F3C; }
+::-webkit-scrollbar-thumb { background: #2E86DE; border-radius: 3px; }
+
+/* Base body */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Inter", sans-serif;
+  background: #ffffff;
+  color: #0D1F3C;
+}
+
+/* Process connector line animation */
+@keyframes drawLine {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.draw-line {
+  animation: drawLine 1.5s ease-out forwards;
+}
+
+/* Teal glow on hover */
+.teal-glow:hover {
+  box-shadow: 0 0 0 1px #00C9A7, 0 4px 20px rgba(0, 201, 167, 0.15);
+}
+
+/* Card hover lift */
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
 }
