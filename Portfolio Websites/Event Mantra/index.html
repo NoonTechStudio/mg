@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventMantra - Creating Unforgettable Experiences</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-navy: #1a365d;
+            --primary-gold: #d4af37;
+            --accent-light: #f7fafc;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --white: #ffffff;
+            --gradient-primary: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            --gradient-gold: linear-gradient(135deg, #d4af37 0%, #f6e05e 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(26, 54, 93, 0.1);
+            transition: all 0.3s ease;
+            padding: 1rem 0;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98) !important;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-dark) !important;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-navy) !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(26, 54, 93, 0.7), rgba(26, 54, 93, 0.8)),
+                        url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(26, 54, 93, 0.8), rgba(212, 175, 55, 0.3));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .hero .lead {
+            font-size: 1.5rem;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        .btn-primary {
+            background: var(--gradient-gold);
+            border: none;
+            padding: 15px 40px;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-outline-light {
+            border: 2px solid var(--white);
+            color: var(--white);
+            padding: 15px 40px;
+            font-weight: 600;
+            border-radius: 50px;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.8s forwards;
+        }
+
+        .btn-outline-light:hover {
+            background: var(--white);
+            color: var(--primary-navy);
+            transform: translateY(-2px);
+        }
+
+        /* Section Styling */
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-gold);
+            border-radius: 2px;
+        }
+
+        .about-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #007bff, #6f42c1);
+            border-radius: 2px;
+        }
+
+        .about-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .about-card h3 {
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 1.8rem;
+        }
+
+        .about-card p {
+            color: #6c757d;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        .text-primary {
+            background: linear-gradient(90deg, #007bff, #6f42c1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            font-size: 2rem !important;
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .image-container:hover img {
+            transform: scale(1.05);
+        }
+
+        .stats-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stats-overlay h6 {
+            margin: 0;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .stats-overlay small {
+            color: #6c757d;
+        }
+
+        @media (max-width: 768px) {
+            .about-section {
+                padding: 60px 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .about-card {
+                padding: 2rem;
+                margin-bottom: 2rem;
+            }
+        }
+
+        /* Portfolio Section */
+        .portfolio-section {
+            padding: 120px 0;
+            background: var(--accent-light);
+        }
+
+        .portfolio-filter {
+            margin-bottom: 4rem;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 2px solid var(--primary-navy);
+            color: var(--primary-navy);
+            padding: 10px 25px;
+            margin: 0 10px 10px 0;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary-navy);
+            color: var(--white);
+        }
+
+        .portfolio-item {
+            position: relative;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .portfolio-item img {
+            transition: all 0.3s ease;
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(26, 54, 93, 0.8), rgba(212, 175, 55, 0.6));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 120px 0;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 0 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+            position: relative;
+            height: auto;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            font-size: 6rem;
+            color: var(--primary-gold);
+            font-family: serif;
+        }
+
+        .client-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            border: 4px solid var(--primary-gold);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 120px 0;
+            background: var(--accent-light);
+        }
+
+        .contact-form {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-control {
+            border: 2px solid rgba(26, 54, 93, 0.1);
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-navy);
+            color: var(--white);
+            padding: 60px 0 30px;
+            margin-top: auto;
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .footer h6 {
+            color: var(--white);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer ul li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer ul li a:hover {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .social-links {
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-gold);
+            color: var(--primary-navy);
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50%;
+            margin: 0 10px 10px 0;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+            color: var(--primary-navy);
+        }
+
+        .newsletter-form {
+            margin-top: 1rem;
+        }
+
+        .newsletter-form .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-form .form-control {
+            border: none;
+            padding: 12px 15px;
+            border-radius: 25px 0 0 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--white);
+        }
+
+        .newsletter-form .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .newsletter-form .form-control:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: none;
+            color: var(--white);
+        }
+
+        .newsletter-form .btn-primary {
+            background: var(--gradient-gold);
+            border: none;
+            color: var(--primary-navy);
+            font-weight: 600;
+            padding: 12px 20px;
+            border-radius: 0 25px 25px 0;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            margin-top: 2rem;
+        }
+
+        .footer-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .heart {
+            color: #e74c3c;
+            font-size: 1.2em;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        .studio-name a {
+            color: #d4af37;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .studio-name a:hover {
+            color: #f4d03f;
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .footer-brand {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+            
+            .social-links {
+                text-align: center;
+            }
+            
+            .footer-container {
+                justify-content: center;
+                text-align: center;
+                margin-top: 1rem;
+            }
+            
+            .footer {
+                padding: 40px 0 20px;
+            }
+        }        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .lead {
+                font-size: 1.2rem;
+            }
+            
+            .btn-outline-light {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            visibility: visible;
+            transition: all 0.5s ease;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--accent-light);
+            border-top: 4px solid var(--primary-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">EventMantra</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#portfolio">Portfolio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">Testimonials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Creating Unforgettable Experiences</h1>
+                <p class="lead">Your premier event management partner in Asia, crafting moments that last a lifetime</p>
+                <a href="#contact" class="btn btn-primary">Get a Quote</a>
+                <a href="#services" class="btn btn-outline-light">View Our Services</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fade-in-up">About EventMantra</h2>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-lg-6 fade-in-up">
+                    <div class="about-card">
+                        <h3 class="mb-4">Our Story</h3>
+                        <p class="mb-4">Founded with a passion for creating extraordinary experiences, EventMantra has been at the forefront of event management in Asia for over a decade. We believe that every event tells a story, and our mission is to make yours unforgettable.</p>
+                        <p class="mb-4">Our team of dedicated professionals combines creativity, precision, and years of experience to deliver events that exceed expectations and create lasting memories.</p>
+                        <div class="row text-center mt-4">
+                            <div class="col-4">
+                                <h4 class="text-primary">300+</h4>
+                                <p>Events Managed</p>
+                            </div>
+                            <div class="col-4">
+                                <h4 class="text-primary">98%</h4>
+                                <p>Client Satisfaction</p>
+                            </div>
+                            <div class="col-4">
+                                <h4 class="text-primary">10+</h4>
+                                <p>Years Experience</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 fade-in-up">
+                    <div class="image-container">
+                        <!-- Using a placeholder image that will work -->
+                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Elegant Event Setup with Purple Lighting" 
+                             class="img-fluid">
+                        <div class="stats-overlay">
+                            <h6>Premium Events</h6>
+                            <small>Luxury & Corporate</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fade-in-up">Our Services</h2>
+                <p class="lead fade-in-up">Comprehensive event management solutions tailored to your needs</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="service-card fade-in-up">
+                        <i class="fas fa-heart service-icon"></i>
+                        <h4 class="mb-3">Wedding Planning</h4>
+                        <p>Turn your dream wedding into reality with our comprehensive planning services, from venue selection to day-of coordination.</p>
+                        <ul class="list-unstyled mt-3">
+                            <li>• Venue Selection</li>
+                            <li>• Vendor Management</li>
+                            <li>• Day-of Coordination</li>
+                            <li>• Timeline Planning</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="service-card fade-in-up">
+                        <i class="fas fa-briefcase service-icon"></i>
+                        <h4 class="mb-3">Corporate Events</h4>
+                        <p>Professional corporate event management for conferences, seminars, product launches, and company celebrations.</p>
+                        <ul class="list-unstyled mt-3">
+                            <li>• Conference Management</li>
+                            <li>• Product Launches</li>
+                            <li>• Team Building</li>
+                            <li>• Award Ceremonies</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="service-card fade-in-up">
+                        <i class="fas fa-birthday-cake service-icon"></i>
+                        <h4 class="mb-3">Private Parties</h4>
+                        <p>Celebrate life's special moments with our personalized party planning services for birthdays, anniversaries, and more.</p>
+                        <ul class="list-unstyled mt-3">
+                            <li>• Birthday Parties</li>
+                            <li>• Anniversary Celebrations</li>
+                            <li>• Theme Parties</li>
+                            <li>• Family Reunions</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="service-card fade-in-up">
+                        <i class="fas fa-music service-icon"></i>
+                        <h4 class="mb-3">Entertainment Events</h4>
+                        <p>From concerts to festivals, we create memorable entertainment experiences that captivate audiences.</p>
+                        <ul class="list-unstyled mt-3">
+                            <li>• Concerts & Shows</li>
+                            <li>• Music Festivals</li>
+                            <li>• Cultural Events</li>
+                            <li>• Art Exhibitions</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="service-card fade-in-up">
+                        <i class="fas fa-utensils service-icon"></i>
+                        <h4 class="mb-3">Catering Services</h4>
+                        <p>Exquisite catering solutions with customized menus to delight your guests and complement your event perfectly.</p>
+                        <ul class="list-unstyled mt-3">
+                            <li>• Custom Menus</li>
+                            <li>• Dietary Accommodations</li>
+                            <li>• Professional Staff</li>
+                            <li>• Setup & Service</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="service-card fade-in-up">
+                        <i class="fas fa-camera service-icon"></i>
+                        <h4 class="mb-3">Event Production</h4>
+                        <p>Complete event production services including audio-visual, lighting, staging, and photography to make your event shine.</p>
+                        <ul class="list-unstyled mt-3">
+                            <li>• Audio-Visual Setup</li>
+                            <li>• Lighting Design</li>
+                            <li>• Stage Management</li>
+                            <li>• Photography & Video</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fade-in-up">Our Portfolio</h2>
+                <p class="lead fade-in-up">A showcase of our most memorable events</p>
+            </div>
+            
+            <div class="portfolio-filter text-center fade-in-up">
+                <button class="filter-btn active" data-filter="all">All Events</button>
+                <button class="filter-btn" data-filter="wedding">Weddings</button>
+                <button class="filter-btn" data-filter="corporate">Corporate</button>
+                <button class="filter-btn" data-filter="private">Private Parties</button>
+                <button class="filter-btn" data-filter="entertainment">Entertainment</button>
+            </div>
+
+            <div class="row portfolio-grid">
+                <div class="col-lg-4 col-md-6 portfolio-item fade-in-up" data-category="wedding">
+                    <img src="./assets/slide1.webp" alt="Elegant Wedding">
+                    <div class="portfolio-overlay">
+                        <div class="text-center text-white">
+                            <h5>Elegant Garden Wedding</h5>
+                            <p>A romantic outdoor celebration</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 portfolio-item fade-in-up" data-category="corporate">
+                    <img src="./assets/slide2.jpg" alt="Corporate Conference">
+                    <div class="portfolio-overlay">
+                        <div class="text-center text-white">
+                            <h5>Tech Conference 2023</h5>
+                            <p>Innovation meets networking</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 portfolio-item fade-in-up" data-category="private">
+                    <img src="./assets/slide3.jpg" alt="Birthday Celebration">
+                    <div class="portfolio-overlay">
+                        <div class="text-center text-white">
+                            <h5>50th Birthday Bash</h5>
+                            <p>A milestone celebration to remember</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 portfolio-item fade-in-up" data-category="entertainment">
+                    <img src="./assets/slide4.jpg" alt="Music Festival">
+                    <div class="portfolio-overlay">
+                        <div class="text-center text-white">
+                            <h5>Summer Music Festival</h5>
+                            <p>Three days of amazing performances</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 portfolio-item fade-in-up" data-category="wedding">
+                    <img src="./assets/slide5.jpg" alt="Beach Wedding">
+                    <div class="portfolio-overlay">
+                        <div class="text-center text-white">
+                            <h5>Seaside Wedding</h5>
+                            <p>Beachfront vows at sunset</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 portfolio-item fade-in-up" data-category="corporate">
+                    <img src="./assets/slide6.png" alt="Product Launch">
+                    <div class="portfolio-overlay">
+                        <div class="text-center text-white">
+                            <h5>Product Launch Event</h5>
+                            <p>Unveiling innovation in style</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fade-in-up">What Our Clients Say</h2>
+                <p class="lead fade-in-up">Don't just take our word for it - hear from our satisfied clients</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="testimonial-card fade-in-up">
+                        <div class="text-center mb-4">
+                            <img src="./assets/pf2.webp" 
+                                 alt="Client" class="client-photo">
+                        </div>
+                        <p class="mb-4">"EventMantra transformed our company's annual conference into an unforgettable experience. Their attention to detail and professional approach exceeded all our expectations."</p>
+                        <div class="text-center">
+                            <h6 class="mb-1">John Peterson</h6>
+                            <small class="text-muted">CEO, TechCorp</small>
+                            <div class="mt-2">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="testimonial-card fade-in-up">
+                        <div class="text-center mb-4">
+                            <img src="./assets/pf1.jpg" 
+                                 alt="Client" class="client-photo">
+                        </div>
+                        <p class="mb-4">"Our wedding day was absolutely perfect thanks to EventMantra. They handled every detail with care and made our dream wedding come true. We couldn't be happier!"</p>
+                        <div class="text-center">
+                            <h6 class="mb-1">Ruchika Patel</h6>
+                            <small class="text-muted">Happy Bride</small>
+                            <div class="mt-2">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="testimonial-card fade-in-up">
+                        <div class="text-center mb-4">
+                            <img src="./assets/pf3.webp" 
+                                 alt="Client" class="client-photo">
+                        </div>
+                        <p class="mb-4">"The product launch event organized by EventMantra was beyond our expectations. Professional, creative, and flawlessly executed. Highly recommended!"</p>
+                        <div class="text-center">
+                            <h6 class="mb-1">Mark Johnson</h6>
+                            <small class="text-muted">Marketing Director</small>
+                            <div class="mt-2">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fade-in-up">Get In Touch</h2>
+                <p class="lead fade-in-up">Ready to plan your next unforgettable event? Let's start the conversation</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="contact-form fade-in-up">
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="Your Name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" placeholder="Your Email" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="tel" class="form-control" placeholder="Phone Number">
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-control" required>
+                                        <option value="">Event Type</option>
+                                        <option value="wedding">Wedding</option>
+                                        <option value="corporate">Corporate Event</option>
+                                        <option value="private">Private Party</option>
+                                        <option value="entertainment">Entertainment Event</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="date" class="form-control" placeholder="Event Date">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control" placeholder="Expected Guests">
+                                </div>
+                            </div>
+                            <textarea class="form-control" rows="5" placeholder="Tell us about your event vision..." required></textarea>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-5">
+                <div class="col-lg-4 text-center fade-in-up">
+                    <div class="contact-info">
+                        <i class="fas fa-map-marker-alt fa-2x text-primary mb-3"></i>
+                        <h5>Visit Us</h5>
+                        <p>123 Event Plaza<br>Mumbai, Maharashtra 400001<br>India</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center fade-in-up">
+                    <div class="contact-info">
+                        <i class="fas fa-phone fa-2x text-primary mb-3"></i>
+                        <h5>Call Us</h5>
+                        <p>+91 98765 43210<br>+91 87654 32109</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center fade-in-up">
+                    <div class="contact-info">
+                        <i class="fas fa-envelope fa-2x text-primary mb-3"></i>
+                        <h5>Email Us</h5>
+                        <p>info@eventmantra.com<br>support@eventmantra.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-brand">EventMantra</div>
+                    <p class="mb-4">Creating unforgettable experiences across Asia with passion, precision, and professionalism. Your dream event is our mission.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h6 class="mb-3">Services</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Wedding Planning</a></li>
+                        <li><a href="#">Corporate Events</a></li>
+                        <li><a href="#">Private Parties</a></li>
+                        <li><a href="#">Entertainment Events</a></li>
+                        <li><a href="#">Event Production</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h6 class="mb-3">Newsletter</h6>
+                    <p>Stay updated with our latest events and offers.</p>
+                    <div class="newsletter-form">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Your email" aria-label="Email address">
+                            <button class="btn btn-primary" type="button">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p class="mb-0">&copy; 2024 EventMantra. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <div class="footer-container">
+                            <span>Designed with</span>
+                            <span class="heart">♥</span>
+                            <span>by</span>
+                            <span class="studio-name">
+                                <a href="https://www.noontechstudio.com/" target="_blank" rel="noopener noreferrer">Noon Tech Studio</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Remove loading overlay
+            setTimeout(function() {
+                $('#loading').addClass('hidden');
+            }, 1000);
+
+            // Navbar scroll effect
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 100) {
+                    $('.navbar').addClass('scrolled');
+                } else {
+                    $('.navbar').removeClass('scrolled');
+                }
+            });
+
+            // Smooth scrolling for navigation links
+            $('a[href^="#"]').on('click', function(e) {
+                e.preventDefault();
+                var target = $(this.getAttribute('href'));
+                if (target.length) {
+                    $('html, body').stop().animate({
+                        scrollTop: target.offset().top - 80
+                    }, 1000);
+                }
+            });
+
+            // Form submission handling
+            $('#contactForm').on('submit', function(e) {
+                e.preventDefault();
+                // Show success message
+                $(this).html('<div class="text-center"><h4 class="text-success mb-3">Thank You!</h4><p>Your message has been sent successfully. Our team will get back to you within 24 hours.</p></div>');
+            });
+
+            // Portfolio filter functionality
+            $('.filter-btn').on('click', function() {
+                $('.filter-btn').removeClass('active');
+                $(this).addClass('active');
+                
+                var filter = $(this).data('filter');
+                $('.portfolio-item').hide().fadeOut(300);
+                
+                setTimeout(function() {
+                    if (filter === 'all') {
+                        $('.portfolio-item').fadeIn(300);
+                    } else {
+                        $('.portfolio-item[data-category="' + filter + '"]').fadeIn(300);
+                    }
+                }, 300);
+            });
+
+            // Scroll animations
+            function checkScroll() {
+                $('.fade-in-up').each(function() {
+                    var elementTop = $(this).offset().top;
+                    var windowHeight = $(window).height();
+                    var scroll = $(window).scrollTop();
+                    
+                    if (scroll + windowHeight > elementTop + 100) {
+                        $(this).addClass('visible');
+                    }
+                });
+            }
+
+            $(window).on('scroll', checkScroll);
+            checkScroll(); // Check on load
+
+            // Counter animation for statistics
+            function animateCounters() {
+                $('.counter').each(function() {
+                    var $this = $(this);
+                    var countTo = $this.attr('data-count');
+                    
+                    $({ countNum: $this.text() }).animate({
+                        countNum: countTo
+                    }, {
+                        duration: 2000,
+                        easing: 'linear',
+                        step: function() {
+                            $this.text(Math.floor(this.countNum));
+                        },
+                        complete: function() {
+                            $this.text(this.countNum);
+                        }
+                    });
+                });
+            }
+
+            // Trigger counter animation when about section is visible
+            var aboutTriggered = false;
+            $(window).on('scroll', function() {
+                if (!aboutTriggered && $(window).scrollTop() + $(window).height() > $('#about').offset().top + 200) {
+                    animateCounters();
+                    aboutTriggered = true;
+                }
+            });
+
+            // Newsletter subscription
+            $('.input-group .btn').on('click', function() {
+                var email = $(this).siblings('input[type="email"]').val();
+                if (email) {
+                    alert('Thank you for subscribing to our newsletter!');
+                    $(this).siblings('input[type="email"]').val('');
+                } else {
+                    alert('Please enter a valid email address.');
+                }
+            });
+
+            // Add loading states to buttons
+            $('.btn').on('click', function() {
+                var $btn = $(this);
+                if (!$btn.hasClass('loading')) {
+                    $btn.addClass('loading');
+                    var originalText = $btn.html();
+                    $btn.html('<i class="fas fa-spinner fa-spin"></i> Loading...');
+                    
+                    setTimeout(function() {
+                        $btn.removeClass('loading').html(originalText);
+                    }, 1500);
+                }
+            });
+
+            // Add parallax effect to hero section
+            $(window).scroll(function() {
+                var scrollTop = $(this).scrollTop();
+                $('.hero').css('background-position', 'center ' + (scrollTop * 0.5) + 'px');
+            });
+
+            // Add typing effect to hero text
+            function typeWriter(element, text, speed) {
+                var i = 0;
+                element.innerHTML = '';
+                
+                function type() {
+                    if (i < text.length) {
+                        element.innerHTML += text.charAt(i);
+                        i++;
+                        setTimeout(type, speed);
+                    }
+                }
+                type();
+            }
+
+            // Lazy loading for images
+            $('img').each(function() {
+                $(this).on('load', function() {
+                    $(this).addClass('loaded');
+                });
+            });
+
+            // Add intersection observer for better performance
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.fade-in-up').forEach(el => {
+                    observer.observe(el);
+                });
+            }
+        });
+
+        // Add some global utility functions
+        window.EventMantra = {
+            showNotification: function(message, type = 'success') {
+                const notification = $(`
+                    <div class="alert alert-${type} alert-dismissible fade show position-fixed" 
+                         style="top: 100px; right: 20px; z-index: 9999;">
+                        ${message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                `);
+                
+                $('body').append(notification);
+                
+                setTimeout(function() {
+                    notification.fadeOut(function() {
+                        $(this).remove();
+                    });
+                }, 5000);
+            },
+            
+            scrollToSection: function(sectionId) {
+                $('html, body').animate({
+                    scrollTop: $(sectionId).offset().top - 80
+                }, 1000);
+            }
+        };
+
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.fade-in-up');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Newsletter subscription functionality
+        document.querySelector('.newsletter-form .btn-primary').addEventListener('click', function() {
+            const emailInput = document.querySelector('.newsletter-form .form-control');
+            const email = emailInput.value.trim();
+            
+            if (email && email.includes('@')) {
+                alert('Thank you for subscribing to our newsletter!');
+                emailInput.value = '';
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        });
+
+        // Add event listeners
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+        
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationDelay = '0.2s';
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

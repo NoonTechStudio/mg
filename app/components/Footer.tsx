@@ -4,6 +4,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer className="relative bg-navy-dark overflow-hidden">
+
       {/* Grid texture */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.04]"
@@ -14,49 +15,65 @@ export default function Footer() {
         }}
       />
 
-      {/* MG watermark */}
-      <div className="absolute bottom-0 right-0 text-white/[0.03] font-heading font-bold text-[20rem] leading-none select-none pointer-events-none">
+      {/* MG hologram watermark */}
+      <div className="absolute bottom-0 right-0 text-white/[0.03] font-heading font-bold text-[22rem] leading-none select-none pointer-events-none">
         MG
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-16 pb-10">
-        {/* 4 columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-          {/* Brand */}
-          <div>
-            <div className="flex items-center gap-3 mb-5">
-              <Image src="/logo.png" alt="MeridianGrid" width={32} height={32} className="object-contain" />
-              <span className="font-heading font-bold text-white text-base">MeridianGrid</span>
-            </div>
-            <p className="text-white/40 text-sm leading-relaxed mb-6">
-              MeridianGrid is a full-service technology solutions company. From custom software and
-              Google Cloud to AI integrations — your A to Z technology partner, from Vadodara to
-              Europe.
-            </p>
-            <div className="space-y-2 text-sm text-white/40">
-              <div className="flex items-center gap-2">
-                <span>📍</span>
-                <span>Vadodara, Gujarat, India</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span>✉️</span>
-                <a href="mailto:hello@meridiangrid.in" className="hover:text-teal-brand transition-colors">
-                  hello@meridiangrid.in
-                </a>
-              </div>
-              <div className="flex items-center gap-2">
-                <span>📞</span>
-                <a href="tel:+918000403090" className="hover:text-teal-brand transition-colors">
-                  +91 80004 03090
-                </a>
-              </div>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+
+        {/* ── Hero logo block ── */}
+        <div className="flex flex-col items-center text-center pt-20 pb-12 border-b border-white/5">
+          <Link href="/" className="inline-block mb-6">
+            <Image
+              src="/logo-white.png"
+              alt="MeridianGrid"
+              width={340}
+              height={100}
+              className="object-contain h-24 w-auto"
+              priority
+            />
+          </Link>
+
+          <p className="text-white/40 text-base leading-relaxed max-w-xl mb-8">
+            A full-service technology solutions company — from custom software and Google Cloud
+            to AI integrations. Your A to Z technology partner, from Vadodara to Europe.
+          </p>
+
+          {/* Contact pills */}
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
+            <a
+              href="mailto:hello@meridiangrid.in"
+              className="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full px-5 py-2.5 text-white/60 hover:text-white transition-all duration-200"
+            >
+              <span>✉️</span>
+              hello@meridiangrid.in
+            </a>
+            <a
+              href="https://wa.me/918000403090"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full px-5 py-2.5 text-white/60 hover:text-white transition-all duration-200"
+            >
+              <span>📱</span>
+              +91 80004 03090
+            </a>
+            <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-5 py-2.5 text-white/40">
+              <span>📍</span>
+              Vadodara, Gujarat, India
             </div>
           </div>
+        </div>
+
+        {/* ── Three-column links ── */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 py-14 border-b border-white/5">
 
           {/* Services */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-5 font-heading uppercase tracking-wider">Services</h4>
-            <ul className="space-y-3 text-sm text-white/40">
+            <h4 className="text-white font-semibold text-xs mb-6 font-heading uppercase tracking-[0.18em]">
+              Services
+            </h4>
+            <ul className="space-y-3.5">
               {[
                 ["Web Design & Development", "/services/web-design"],
                 ["Custom Software & SaaS", "/services/software-development"],
@@ -66,7 +83,11 @@ export default function Footer() {
                 ["AI Integrations", "/services/software-development"],
               ].map(([name, href]) => (
                 <li key={name}>
-                  <Link href={href} className="hover:text-teal-brand transition-colors">
+                  <Link
+                    href={href}
+                    className="text-sm text-white/40 hover:text-teal-brand transition-colors flex items-center gap-2 group"
+                  >
+                    <span className="w-0 group-hover:w-3 h-px bg-teal-brand transition-all duration-200 overflow-hidden" />
                     {name}
                   </Link>
                 </li>
@@ -76,10 +97,12 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-5 font-heading uppercase tracking-wider">Company</h4>
-            <ul className="space-y-3 text-sm text-white/40">
+            <h4 className="text-white font-semibold text-xs mb-6 font-heading uppercase tracking-[0.18em]">
+              Company
+            </h4>
+            <ul className="space-y-3.5">
               {[
-                ["Portfolio", "#portfolio"],
+                ["Portfolio", "/portfolio"],
                 ["Our Process", "#process"],
                 ["Google Solutions", "#google-solutions"],
                 ["Contact", "/contact"],
@@ -87,7 +110,11 @@ export default function Footer() {
                 ["GitHub", "https://github.com/MeridianGrid"],
               ].map(([name, href]) => (
                 <li key={name}>
-                  <Link href={href} className="hover:text-teal-brand transition-colors">
+                  <Link
+                    href={href}
+                    className="text-sm text-white/40 hover:text-teal-brand transition-colors flex items-center gap-2 group"
+                  >
+                    <span className="w-0 group-hover:w-3 h-px bg-teal-brand transition-all duration-200 overflow-hidden" />
                     {name}
                   </Link>
                 </li>
@@ -97,12 +124,15 @@ export default function Footer() {
 
           {/* Google Solutions */}
           <div id="google-solutions">
-            <div className="flex items-center gap-2 mb-5">
-              <div className="bg-white/5 border border-white/10 rounded-lg px-3 py-1.5">
-                <span className="text-white/60 text-xs font-semibold tracking-wider">GOOGLE PARTNER</span>
-              </div>
+            <div className="flex items-center gap-2 mb-6">
+              <h4 className="text-white font-semibold text-xs font-heading uppercase tracking-[0.18em]">
+                Google Solutions
+              </h4>
+              <span className="text-[10px] font-bold text-teal-brand border border-teal-brand/30 rounded px-1.5 py-0.5 tracking-wider">
+                PARTNER
+              </span>
             </div>
-            <ul className="space-y-3 text-sm text-white/40">
+            <ul className="space-y-3.5">
               {[
                 "Google Workspace Reseller",
                 "Google Cloud Platform",
@@ -110,8 +140,8 @@ export default function Footer() {
                 "AppSheet No-Code Apps",
                 "Google Ads Management",
               ].map((item) => (
-                <li key={item} className="flex items-center gap-2">
-                  <span className="w-1 h-1 rounded-full bg-teal-brand/50" />
+                <li key={item} className="flex items-center gap-3 text-sm text-white/40">
+                  <span className="w-1.5 h-1.5 rounded-full bg-teal-brand/40 flex-shrink-0" />
                   {item}
                 </li>
               ))}
@@ -119,15 +149,19 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/30">
+        {/* ── Bottom bar ── */}
+        <div className="py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/25">
           <span>© 2025 MeridianGrid. All rights reserved.</span>
-          <span>Crafted with care in Vadodara, India 🇮🇳</span>
-          <div className="flex gap-5">
-            <Link href="/privacy" className="hover:text-white/60 transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-white/60 transition-colors">Terms</Link>
+          <span className="flex items-center gap-1.5">
+            Crafted with care in Vadodara, India
+            <span className="text-sm">🇮🇳</span>
+          </span>
+          <div className="flex gap-6">
+            <Link href="/privacy" className="hover:text-white/50 transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-white/50 transition-colors">Terms</Link>
           </div>
         </div>
+
       </div>
     </footer>
   );
