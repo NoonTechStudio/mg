@@ -53,7 +53,8 @@ export default function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-28 pb-16 w-full">
+      {/* pt-36 accounts for TopBar (36px) + Navbar (80px) */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-36 pb-16 w-full">
         <div className="max-w-3xl">
           {/* Label */}
           <div className="flex items-center gap-3 mb-6">
