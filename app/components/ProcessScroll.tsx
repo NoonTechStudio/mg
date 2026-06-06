@@ -1,50 +1,36 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import SectionLabel from "./SectionLabel";
-import GridBackground from "./GridBackground";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Search, Map, Zap, Rocket } from "lucide-react";
 
 const steps = [
   {
     number: "01",
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-      </svg>
-    ),
+    icon: Search,
     title: "Discovery",
     description:
-      "Deep-dive workshops to map your business goals, user journeys, technical constraints, and success metrics. We produce a detailed brief, scope, and timeline before writing a single line of code — zero surprises.",
+      "Deep-dive workshops to map your business goals, user journeys, and technical constraints. We produce a detailed brief, scope, and timeline before writing a single line of code — zero surprises.",
   },
   {
     number: "02",
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-      </svg>
-    ),
+    icon: Map,
     title: "Architecture",
     description:
-      "System design documents, ER diagrams, API contracts, and UI wireframes. We align on tech stack, infrastructure, and security model before build. You see exactly what you're getting before we start.",
+      "System design, ER diagrams, API contracts, and wireframes. We align on tech stack, infrastructure, and security model before build. You see exactly what you're getting before we start.",
   },
   {
     number: "03",
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    ),
+    icon: Zap,
     title: "Agile Build",
     description:
       "Two-week sprints with a working demo every Friday. Shared project board and Slack channel. Feedback actioned quickly — we never work in black boxes.",
   },
   {
     number: "04",
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
-      </svg>
-    ),
+    icon: Rocket,
     title: "Launch & Train",
     description:
       "Zero-downtime deployment on your preferred cloud. Full documentation, recorded walkthroughs, and 30-day post-launch support. You own everything — code, infrastructure, knowledge.",
@@ -52,28 +38,33 @@ const steps = [
 ];
 
 export default function ProcessScroll() {
-  const [visible, setVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+    const ob = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setVisible(true); },
       { threshold: 0.1 }
     );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
+    if (ref.current) ob.observe(ref.current);
+    return () => ob.disconnect();
   }, []);
 
   return (
-    <section id="process" className="relative py-24 bg-surface overflow-hidden">
-      <GridBackground variant="dots" opacity={0.04} />
+    <section id="process" className="relative bg-white overflow-hidden py-24">
+      {/* Subtle dot pattern */}
+      <div className="absolute inset-0 grid-dots-bg pointer-events-none opacity-100" />
 
       <div ref={ref} className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+
         {/* Header */}
-        <div
-          className={`text-center mb-16 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-        >
-          <SectionLabel text="How We Work" />
+        <div className={cn(
+          "text-center mb-14 transition-all duration-700",
+          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        )}>
+          <Badge variant="outline" className="mb-4 text-teal-brand border-teal-brand/30 bg-teal-brand/5 font-heading tracking-widest text-[11px] uppercase">
+            How We Work
+          </Badge>
           <h2 className="font-heading font-bold text-4xl lg:text-5xl text-navy mb-4">
             No black boxes. Full transparency.
           </h2>
@@ -81,32 +72,35 @@ export default function ProcessScroll() {
 
         {/* Steps */}
         <div className="relative">
-          {/* Connector line — desktop only */}
-          <div className="hidden lg:block absolute top-16 left-0 right-0 h-px bg-blue-brand/15 z-0">
-            {visible && (
-              <div className="h-full bg-teal-brand/30 draw-line" />
-            )}
+          {/* Connector — desktop */}
+          <div className="hidden lg:block absolute top-[52px] left-[12.5%] right-[12.5%] h-px bg-slate-200 z-0">
+            {visible && <div className="h-full bg-teal-brand/40 draw-line" />}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 relative z-10">
-            {steps.map((step, i) => (
-              <div
-                key={step.number}
-                className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                style={{ transitionDelay: `${i * 150}ms` }}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+            {steps.map(({ number, icon: Icon, title, description }, i) => (
+              <Card
+                key={number}
+                className={cn(
+                  "border-slate-200 bg-white card-lift transition-all duration-700",
+                  visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                )}
+                style={{ transitionDelay: `${i * 140}ms` }}
               >
-                {/* Number — large bg */}
-                <div className="relative mb-4">
-                  <span className="absolute -top-6 -left-2 font-heading font-bold text-7xl text-navy/5 select-none pointer-events-none leading-none">
-                    {step.number}
-                  </span>
-                  <div className="relative w-14 h-14 bg-white border-2 border-blue-brand/20 rounded-2xl flex items-center justify-center text-blue-brand shadow-sm">
-                    {step.icon}
+                <CardContent className="p-6 pt-7">
+                  {/* Icon + number row */}
+                  <div className="flex items-start justify-between mb-5">
+                    <div className="w-12 h-12 bg-surface border border-blue-brand/15 rounded-2xl flex items-center justify-center text-blue-brand">
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <span className="font-heading font-bold text-4xl text-navy/6 leading-none select-none">
+                      {number}
+                    </span>
                   </div>
-                </div>
-                <h3 className="font-heading font-bold text-xl text-navy mb-3">{step.title}</h3>
-                <p className="text-mid-text text-sm leading-relaxed">{step.description}</p>
-              </div>
+                  <h3 className="font-heading font-bold text-lg text-navy mb-3">{title}</h3>
+                  <p className="text-mid-text text-sm leading-relaxed">{description}</p>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>

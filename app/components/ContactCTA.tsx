@@ -1,77 +1,89 @@
-import SectionLabel from "./SectionLabel";
-import GridBackground from "./GridBackground";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { MessageCircle, Mail, ArrowRight } from "lucide-react";
 
 export default function ContactCTA() {
   return (
-    <section id="contact-cta" className="relative py-24 bg-navy overflow-hidden">
-      <GridBackground variant="dots" opacity={0.05} dark />
+    <section id="contact-cta" className="relative bg-navy overflow-hidden py-24">
+      <div className="absolute inset-0 grid-lines-dark pointer-events-none" />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 lg:px-8 text-center">
-        <SectionLabel text="Let's Build Together" />
-        <h2 className="font-heading font-bold text-4xl lg:text-5xl text-white mb-5">
+      {/* Meridian arc */}
+      <div
+        className="meridian-arc"
+        style={{ width: 600, height: 600, top: "50%", left: "50%", transform: "translate(-50%,-50%)", borderColor: "rgba(0,201,167,0.07)" }}
+      />
+
+      <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8 text-center">
+        <Badge variant="outline" className="mb-5 text-teal-brand border-teal-brand/30 bg-teal-brand/5 font-heading tracking-widest text-[11px] uppercase">
+          Let&apos;s Build Together
+        </Badge>
+        <h2 className="font-heading font-bold text-4xl lg:text-5xl text-white mb-5 leading-tight">
           Have a project in mind?
           <br />
           <span className="text-teal-brand">Let&apos;s make it real.</span>
         </h2>
-        <p className="text-white/50 text-lg mb-14 max-w-xl mx-auto leading-relaxed">
+        <p className="text-white/50 text-lg mb-12 max-w-xl mx-auto leading-relaxed">
           Drop your details and we&apos;ll reply within one business day with a no-pressure intro call.
           No spam. Just a real conversation.
         </p>
 
-        {/* Two contact cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
           {/* WhatsApp */}
-          <div className="bg-[#0A1628] border border-white/10 rounded-2xl p-8 text-left card-hover teal-glow">
-            <div className="w-12 h-12 bg-green-500/15 rounded-xl flex items-center justify-center mb-5">
-              <svg className="w-7 h-7 text-green-400" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.116 1.523 5.845L.057 23.012a.5.5 0 00.632.598l5.374-1.542A11.937 11.937 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.803 9.803 0 01-5.03-1.387l-.36-.214-3.724 1.07 1.022-3.608-.235-.372A9.787 9.787 0 012.182 12C2.182 6.572 6.572 2.182 12 2.182S21.818 6.572 21.818 12 17.428 21.818 12 21.818z" />
-              </svg>
-            </div>
-            <h3 className="font-heading font-bold text-white text-xl mb-2">WhatsApp us directly</h3>
-            <p className="text-white/50 text-sm leading-relaxed mb-6">
-              Quick questions, project briefs, or just a hello — we respond within hours.
-            </p>
-            <a
-              href="https://wa.me/918000403090"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-green-500 text-white font-semibold rounded-xl text-sm hover:bg-green-600 transition-colors"
-            >
-              Chat on WhatsApp
-            </a>
-          </div>
+          <Card className="border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/8 transition-colors group">
+            <CardContent className="p-7 text-left">
+              <div className="w-11 h-11 rounded-xl bg-green-500/15 flex items-center justify-center mb-5">
+                <MessageCircle className="w-5 h-5 text-green-400" />
+              </div>
+              <h3 className="font-heading font-bold text-white text-lg mb-2">WhatsApp us directly</h3>
+              <p className="text-white/45 text-sm leading-relaxed mb-6">
+                Quick questions, project briefs, or just a hello — we respond within hours.
+              </p>
+              <a
+                href="https://wa.me/918000403090"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "inline-flex items-center gap-2 px-5 py-2.5 rounded-xl",
+                  "bg-green-500 text-white font-semibold text-sm",
+                  "hover:bg-green-600 transition-colors"
+                )}
+              >
+                Chat on WhatsApp <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
+            </CardContent>
+          </Card>
 
           {/* Email */}
-          <div className="bg-[#0A1628] border border-white/10 rounded-2xl p-8 text-left card-hover teal-glow">
-            <div className="w-12 h-12 bg-blue-brand/15 rounded-xl flex items-center justify-center mb-5">
-              <svg className="w-7 h-7 text-blue-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <h3 className="font-heading font-bold text-white text-xl mb-2">Send a detailed brief</h3>
-            <p className="text-white/50 text-sm leading-relaxed mb-6">
-              Prefer email? Send us your project details and we&apos;ll come back with a thoughtful proposal.
-            </p>
-            <a
-              href="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-brand text-white font-semibold rounded-xl text-sm hover:bg-blue-700 transition-colors"
-            >
-              Open Full Contact Form
-            </a>
-          </div>
+          <Card className="border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/8 transition-colors group">
+            <CardContent className="p-7 text-left">
+              <div className="w-11 h-11 rounded-xl bg-blue-brand/15 flex items-center justify-center mb-5">
+                <Mail className="w-5 h-5 text-blue-brand" />
+              </div>
+              <h3 className="font-heading font-bold text-white text-lg mb-2">Send a detailed brief</h3>
+              <p className="text-white/45 text-sm leading-relaxed mb-6">
+                Prefer email? Send us your project details and we&apos;ll come back with a thoughtful proposal.
+              </p>
+              <a
+                href="/contact"
+                className={cn(
+                  "inline-flex items-center gap-2 px-5 py-2.5 rounded-xl",
+                  "bg-blue-brand text-white font-semibold text-sm",
+                  "hover:opacity-90 transition-opacity"
+                )}
+              >
+                Open Contact Form <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* Email */}
-        <div className="flex items-center justify-center gap-3">
-          <span className="text-white/30 text-sm">or email directly:</span>
-          <a
-            href="mailto:hello@meridiangrid.in"
-            className="text-teal-brand font-semibold text-lg hover:underline tracking-tight"
-          >
+        <p className="text-white/30 text-sm">
+          or email directly:{" "}
+          <a href="mailto:hello@meridiangrid.in" className="text-teal-brand font-semibold hover:underline">
             hello@meridiangrid.in
           </a>
-        </div>
+        </p>
       </div>
     </section>
   );

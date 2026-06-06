@@ -2,7 +2,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import TrustBar from "./components/TrustBar";
 import ServicePillars from "./components/ServicePillars";
-import PortfolioGrid from "./components/PortfolioGrid";
+import IndustriesSection from "./components/IndustriesSection";
 import ProcessScroll from "./components/ProcessScroll";
 import AISection from "./components/AISection";
 import TestimonialMarquee from "./components/TestimonialMarquee";
@@ -21,7 +21,7 @@ export default function HomePage() {
         <Hero />
         <TrustBar />
         <ServicePillars />
-        <PortfolioGrid />
+        <IndustriesSection />
         <ProcessScroll />
         <AISection />
         <TestimonialMarquee />

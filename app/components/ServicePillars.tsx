@@ -2,106 +2,80 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import SectionLabel from "./SectionLabel";
-import GridBackground from "./GridBackground";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import {
+  Paintbrush, Code2, Building2, Smartphone, Cloud,
+  CheckCircle2, ArrowRight,
+} from "lucide-react";
 
-function useScrollReveal() {
+function useReveal(threshold = 0.12) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.15 }
+    const ob = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setVisible(true); },
+      { threshold }
     );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+    if (ref.current) ob.observe(ref.current);
+    return () => ob.disconnect();
+  }, [threshold]);
   return { ref, visible };
 }
 
-const webServices = [
-  "UI / UX Design",
-  "Next.js / React Development",
-  "E-commerce Platforms (Shopify + Custom)",
-  "Branding & Identity",
-  "Landing Pages & Funnels",
-  "SEO Optimisation",
-];
+const webServices  = ["UI / UX Design","Next.js / React Development","E-commerce Platforms","Branding & Identity","Landing Pages & Funnels","SEO Optimisation"];
+const softServices = ["Custom SaaS Platforms","AI Integrations & Agents","ERP & Admin Panels","REST & GraphQL APIs","Mobile App Backends","Database Architecture"];
 
-const softwareServices = [
-  "Custom SaaS Platforms",
-  "AI Integrations & Agents",
-  "ERP & Admin Panels",
-  "REST & GraphQL APIs",
-  "Mobile App Backends",
-  "Database Architecture",
-];
-
-const additionalCards = [
+const bottomCards = [
   {
-    icon: (
-      <svg className="w-8 h-8" viewBox="0 0 48 48" fill="none">
-        <path d="M24 4L4 14v6h40v-6L24 4z" fill="#4285F4" />
-        <rect x="4" y="20" width="40" height="4" fill="#34A853" />
-        <rect x="4" y="24" width="8" height="20" fill="#FBBC05" />
-        <rect x="36" y="24" width="8" height="20" fill="#EA4335" />
-        <rect x="12" y="24" width="24" height="20" fill="#4285F4" opacity="0.7" />
-      </svg>
-    ),
+    icon: <Building2 className="w-5 h-5" />,
     title: "Google Workspace",
-    description:
-      "Professional email, Drive, Meet, Docs — complete Google Workspace setup, migration, and management. Become the most organised business in your industry.",
+    desc: "Professional email, Drive, Meet, and Docs — complete setup, migration, and management for your team.",
     tag: "Certified Reseller",
     href: "/services/google-workspace",
+    color: "text-blue-brand",
+    bg: "bg-blue-brand/8",
   },
   {
-    icon: (
-      <svg className="w-8 h-8" viewBox="0 0 48 48" fill="none">
-        <rect x="8" y="4" width="32" height="40" rx="4" fill="#1A3461" />
-        <rect x="12" y="10" width="24" height="3" rx="1.5" fill="#00C9A7" />
-        <rect x="12" y="16" width="18" height="3" rx="1.5" fill="#2E86DE" />
-        <rect x="12" y="22" width="24" height="3" rx="1.5" fill="#00C9A7" />
-        <rect x="12" y="28" width="16" height="3" rx="1.5" fill="#2E86DE" />
-        <rect x="12" y="34" width="20" height="3" rx="1.5" fill="#00C9A7" />
-      </svg>
-    ),
+    icon: <Smartphone className="w-5 h-5" />,
     title: "AppSheet No-Code Apps",
-    description:
-      "Build powerful mobile and web apps from your Google Sheets data — without traditional coding. CRM, inventory, field tracking, HR — delivered in weeks.",
+    desc: "Build powerful mobile and web apps from your Google Sheets — no traditional coding required.",
     tag: "Google Technology",
     href: "/services/appsheet",
+    color: "text-teal-brand",
+    bg: "bg-teal-brand/8",
   },
   {
-    icon: (
-      <svg className="w-8 h-8" viewBox="0 0 48 48" fill="none">
-        <path d="M24 8C15.16 8 8 15.16 8 24s7.16 16 16 16 16-7.16 16-16S32.84 8 24 8z" fill="#2E86DE" opacity="0.2" />
-        <path d="M24 8C15.16 8 8 15.16 8 24s7.16 16 16 16 16-7.16 16-16S32.84 8 24 8z" stroke="#2E86DE" strokeWidth="2" fill="none" />
-        <path d="M14 24c0-5.52 4.48-10 10-10" stroke="#00C9A7" strokeWidth="3" strokeLinecap="round" />
-        <path d="M34 24c0 5.52-4.48 10-10 10" stroke="#00C9A7" strokeWidth="3" strokeLinecap="round" />
-        <circle cx="24" cy="24" r="3" fill="#00C9A7" />
-      </svg>
-    ),
+    icon: <Cloud className="w-5 h-5" />,
     title: "Cloud & Firebase",
-    description:
-      "Host, scale, and power your applications on Google Cloud Platform and Firebase. Setup, migration, and monthly management included.",
+    desc: "Host, scale, and power your apps on Google Cloud Platform and Firebase with full ongoing support.",
     tag: "GCP Partner",
     href: "/services/cloud",
+    color: "text-navy",
+    bg: "bg-navy/8",
   },
 ];
 
 export default function ServicePillars() {
-  const { ref, visible } = useScrollReveal();
+  const { ref, visible } = useReveal();
 
   return (
-    <section id="services" className="relative py-24 bg-white overflow-hidden">
-      <GridBackground variant="dots" opacity={0.04} />
+    <section id="services" className="relative bg-white overflow-hidden py-24">
+      {/* Grid dot texture */}
+      <div className="absolute inset-0 grid-dots-bg pointer-events-none opacity-100" />
 
       <div ref={ref} className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+
         {/* Header */}
-        <div
-          className={`text-center mb-16 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-        >
-          <SectionLabel text="What We Do" />
+        <div className={cn(
+          "text-center mb-14 transition-all duration-700",
+          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        )}>
+          <Badge variant="outline" className="mb-4 text-teal-brand border-teal-brand/30 bg-teal-brand/5 font-heading tracking-widest text-[11px] uppercase">
+            What We Do
+          </Badge>
           <h2 className="font-heading font-bold text-4xl lg:text-5xl text-navy mb-4">
             Five pillars. One partner.
           </h2>
@@ -111,103 +85,106 @@ export default function ServicePillars() {
           </p>
         </div>
 
-        {/* Two main pillars */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        {/* Two hero pillars */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
+
           {/* Pillar 1 — Web */}
-          <div
-            className={`border border-blue-brand/15 rounded-2xl p-8 bg-surface card-hover teal-glow transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-          >
-            <div className="text-xs font-semibold tracking-widest text-mid-text uppercase mb-4">
-              01 / Digital Experiences
-            </div>
-            <div className="w-12 h-12 bg-teal-brand/10 rounded-xl flex items-center justify-center mb-5">
-              <svg className="w-6 h-6 text-teal-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-              </svg>
-            </div>
-            <h3 className="font-heading font-bold text-2xl text-navy mb-3">
-              Web Design & Development
-            </h3>
-            <p className="text-mid-text leading-relaxed mb-6">
-              Beautiful, conversion-focused websites and brand identities. Restaurants, retail,
-              clinics, agencies — we craft digital experiences that grow your business.
-            </p>
-            <ul className="space-y-2 mb-8">
-              {webServices.map((s) => (
-                <li key={s} className="flex items-center gap-3 text-sm text-mid-text">
-                  <span className="text-teal-brand">✓</span>
-                  {s}
-                </li>
-              ))}
-            </ul>
-            <Link
-              href="/services/web-design"
-              className="text-teal-brand font-semibold text-sm hover:gap-3 flex items-center gap-2 transition-all group"
-            >
-              Explore Web Design
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
-            </Link>
-          </div>
+          <Card className={cn(
+            "border-slate-200 bg-surface card-lift overflow-hidden transition-all duration-700 delay-100",
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          )}>
+            <CardHeader className="p-8 pb-0">
+              <div className="flex items-center justify-between mb-5">
+                <span className="text-[11px] font-semibold tracking-widest text-slate-text uppercase">01 / Digital Experiences</span>
+                <div className="w-10 h-10 bg-teal-brand/10 rounded-xl flex items-center justify-center text-teal-brand">
+                  <Paintbrush className="w-5 h-5" />
+                </div>
+              </div>
+              <h3 className="font-heading font-bold text-2xl text-navy">Web Design & Development</h3>
+            </CardHeader>
+            <CardContent className="p-8 pt-4">
+              <p className="text-mid-text text-sm leading-relaxed mb-6">
+                Beautiful, conversion-focused websites and brand identities. Restaurants, retail, clinics,
+                agencies — we craft digital experiences that grow your business.
+              </p>
+              <ul className="space-y-2 mb-8">
+                {webServices.map(s => (
+                  <li key={s} className="flex items-center gap-3 text-sm text-mid-text">
+                    <CheckCircle2 className="w-4 h-4 text-teal-brand flex-shrink-0" />
+                    {s}
+                  </li>
+                ))}
+              </ul>
+              <Separator className="mb-6 bg-slate-100" />
+              <Link href="/services/web-design" className="inline-flex items-center gap-2 text-teal-brand font-semibold text-sm group">
+                Explore Web Design
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </CardContent>
+          </Card>
 
           {/* Pillar 2 — Software */}
-          <div
-            className={`border border-blue-brand/15 rounded-2xl p-8 bg-navy text-white card-hover teal-glow transition-all duration-700 delay-200 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-          >
-            <div className="text-xs font-semibold tracking-widest text-white/40 uppercase mb-4">
-              02 / Software Engineering
-            </div>
-            <div className="w-12 h-12 bg-blue-brand/20 rounded-xl flex items-center justify-center mb-5">
-              <svg className="w-6 h-6 text-blue-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-              </svg>
-            </div>
-            <h3 className="font-heading font-bold text-2xl text-white mb-3">
-              Custom Software & SaaS
-            </h3>
-            <p className="text-white/60 leading-relaxed mb-6">
-              Enterprise-grade platforms, AI integrations, and automation tools that replace
-              expensive off-the-shelf software and give your business a real competitive edge.
-            </p>
-            <ul className="space-y-2 mb-8">
-              {softwareServices.map((s) => (
-                <li key={s} className="flex items-center gap-3 text-sm text-white/70">
-                  <span className="text-teal-brand">✓</span>
-                  {s}
-                </li>
-              ))}
-            </ul>
-            <Link
-              href="/services/software-development"
-              className="text-teal-brand font-semibold text-sm flex items-center gap-2 group"
-            >
-              Explore Software Solutions
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
-            </Link>
-          </div>
+          <Card className={cn(
+            "border-navy/20 bg-navy text-white card-lift overflow-hidden transition-all duration-700 delay-200",
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          )}>
+            <CardHeader className="p-8 pb-0">
+              <div className="flex items-center justify-between mb-5">
+                <span className="text-[11px] font-semibold tracking-widest text-white/40 uppercase">02 / Software Engineering</span>
+                <div className="w-10 h-10 bg-blue-brand/20 rounded-xl flex items-center justify-center text-blue-brand">
+                  <Code2 className="w-5 h-5" />
+                </div>
+              </div>
+              <h3 className="font-heading font-bold text-2xl text-white">Custom Software & SaaS</h3>
+            </CardHeader>
+            <CardContent className="p-8 pt-4">
+              <p className="text-white/55 text-sm leading-relaxed mb-6">
+                Enterprise-grade platforms, AI integrations, and automation tools that replace expensive
+                off-the-shelf software and give your business a real competitive edge.
+              </p>
+              <ul className="space-y-2 mb-8">
+                {softServices.map(s => (
+                  <li key={s} className="flex items-center gap-3 text-sm text-white/65">
+                    <CheckCircle2 className="w-4 h-4 text-teal-brand flex-shrink-0" />
+                    {s}
+                  </li>
+                ))}
+              </ul>
+              <Separator className="mb-6 bg-white/10" />
+              <Link href="/services/software-development" className="inline-flex items-center gap-2 text-teal-brand font-semibold text-sm group">
+                Explore Software Solutions
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* 3 additional cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {additionalCards.map((card, i) => (
-            <div
+        {/* Three bottom cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {bottomCards.map((card, i) => (
+            <Card
               key={card.title}
-              className={`border border-blue-brand/15 rounded-2xl p-6 bg-white card-hover teal-glow transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-              style={{ transitionDelay: `${300 + i * 100}ms` }}
+              className={cn(
+                "border-slate-200 bg-white card-lift overflow-hidden transition-all duration-700",
+                visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              )}
+              style={{ transitionDelay: `${300 + i * 80}ms` }}
             >
-              <div className="mb-4">{card.icon}</div>
-              <span className="inline-block text-xs font-semibold bg-teal-brand/10 text-teal-brand px-3 py-1 rounded-full mb-3">
-                {card.tag}
-              </span>
-              <h3 className="font-heading font-bold text-lg text-navy mb-2">{card.title}</h3>
-              <p className="text-mid-text text-sm leading-relaxed mb-5">{card.description}</p>
-              <Link
-                href={card.href}
-                className="text-teal-brand font-semibold text-sm flex items-center gap-2 group"
-              >
-                Learn More
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </Link>
-            </div>
+              <CardContent className="p-6">
+                <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center mb-4", card.bg, card.color)}>
+                  {card.icon}
+                </div>
+                <Badge variant="secondary" className="mb-3 text-[10px] font-semibold tracking-wider uppercase">
+                  {card.tag}
+                </Badge>
+                <h3 className="font-heading font-bold text-navy mb-2">{card.title}</h3>
+                <p className="text-mid-text text-sm leading-relaxed mb-5">{card.desc}</p>
+                <Link href={card.href} className="inline-flex items-center gap-1.5 text-teal-brand font-semibold text-sm group">
+                  Learn More
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>

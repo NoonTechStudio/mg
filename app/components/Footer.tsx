@@ -149,8 +149,21 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* ── Registration numbers ── */}
+        <div className="py-5 border-t border-white/5 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-x-8 gap-y-2 text-[11px] text-white/25">
+          <span className="flex items-center gap-1.5">
+            <span className="text-white/15 font-semibold uppercase tracking-wider">GSTIN</span>
+            <span className="font-mono text-white/35 tracking-wide">24DPLPS3319D1ZW</span>
+          </span>
+          <span className="hidden sm:block w-px h-3 bg-white/10" />
+          <span className="flex items-center gap-1.5">
+            <span className="text-white/15 font-semibold uppercase tracking-wider">UDYAM</span>
+            <span className="font-mono text-white/35 tracking-wide">GJ-24-0235549</span>
+          </span>
+        </div>
+
         {/* ── Bottom bar ── */}
-        <div className="py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/25">
+        <div className="py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/25">
           <span>© 2025 MeridianGrid. All rights reserved.</span>
           <span className="flex items-center gap-1.5">
             Crafted with care in Vadodara, India
