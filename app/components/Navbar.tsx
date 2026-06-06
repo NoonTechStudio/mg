@@ -1,228 +1,251 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { ChevronDown } from "lucide-react";
 
 const services = [
   { name: "Web Design & Development", href: "/services/web-design" },
-  { name: "Custom Software & SaaS", href: "/services/software-development" },
-  { name: "Google Workspace", href: "/services/google-workspace" },
-  { name: "AppSheet Apps", href: "/services/appsheet" },
-  { name: "Cloud & Firebase", href: "/services/cloud" },
+  { name: "Custom Software & SaaS",   href: "/services/software-development" },
+  { name: "Google Workspace",          href: "/services/google-workspace" },
+  { name: "AppSheet Apps",             href: "/services/appsheet" },
+  { name: "Cloud & Firebase",          href: "/services/cloud" },
 ];
 
 const navLinks = [
-  { name: "Portfolio", href: "#portfolio" },
-  { name: "Process", href: "#process" },
-  { name: "Google Solutions", href: "#google-solutions" },
-  { name: "Contact", href: "/contact" },
+  { name: "Portfolio",         href: "/portfolio" },
+  { name: "Process",           href: "/#process" },
+  { name: "Google Solutions",  href: "/#google-solutions" },
+  { name: "Contact",           href: "/contact" },
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
+  const pathname   = usePathname();
+  const isHomePage = pathname === "/";
+
+  const [scrolled,      setScrolled]      = useState(false);
+  const [mobileOpen,    setMobileOpen]    = useState(false);
+  const [servicesOpen,  setServicesOpen]  = useState(false);
 
   useEffect(() => {
-    // Switch when user scrolls past ~90% of the hero (which is min-h-screen)
-    const onScroll = () => {
-      setScrolled(window.scrollY > window.innerHeight * 0.85);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const check = () =>
+      setScrolled(window.scrollY > window.innerHeight * 0.8);
+    check(); // run immediately on mount
+    window.addEventListener("scroll", check, { passive: true });
+    return () => window.removeEventListener("scroll", check);
   }, []);
+
+  // On non-home pages always show the white / "scrolled" style
+  const light = !isHomePage || scrolled;
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-        scrolled
-          ? "bg-white shadow-md border-b border-gray-100"
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out",
+        light
+          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100"
           : "bg-transparent"
-      }`}
+      )}
     >
       <nav className="max-w-7xl mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
 
-        {/* Logo — two images crossfading via opacity */}
-        <Link href="/" className="flex items-center flex-shrink-0 relative h-20 w-auto">
-          {/* White logo — visible on hero */}
+        {/* ── Logo ── */}
+        <Link href="/" className="relative flex items-center flex-shrink-0 h-20">
+          {/* White logo — hero only */}
           <Image
             src="/logo-white.png"
             alt="MeridianGrid"
-            width={220}
-            height={80}
-            className={`object-contain h-20 w-auto transition-opacity duration-500 ${
-              scrolled ? "opacity-0" : "opacity-100"
-            }`}
+            width={220} height={80}
+            className={cn(
+              "object-contain h-20 w-auto transition-opacity duration-500",
+              light ? "opacity-0 pointer-events-none" : "opacity-100"
+            )}
             priority
           />
-          {/* Colour logo — fades in after hero */}
+          {/* Colour logo — light navbar */}
           <Image
             src="/logo.png"
             alt="MeridianGrid"
-            width={220}
-            height={80}
-            className={`object-contain h-20 w-auto absolute inset-0 transition-opacity duration-500 ${
-              scrolled ? "opacity-100" : "opacity-0"
-            }`}
+            width={220} height={80}
+            className={cn(
+              "object-contain h-20 w-auto absolute inset-0 transition-opacity duration-500",
+              light ? "opacity-100" : "opacity-0 pointer-events-none"
+            )}
             priority
           />
         </Link>
 
-        {/* Desktop Nav */}
-        <div className="hidden lg:flex items-center gap-8">
-          {/* Services Dropdown */}
+        {/* ── Desktop links ── */}
+        <div className="hidden lg:flex items-center gap-7">
+
+          {/* Services dropdown */}
           <div
             className="relative"
             onMouseEnter={() => setServicesOpen(true)}
             onMouseLeave={() => setServicesOpen(false)}
           >
-            <button
-              className={`text-sm font-medium transition-colors duration-300 flex items-center gap-1 ${
-                scrolled
-                  ? "text-navy/70 hover:text-navy"
-                  : "text-white/80 hover:text-white"
-              }`}
-            >
+            <button className={cn(
+              "flex items-center gap-1 text-sm font-medium transition-colors duration-300",
+              light ? "text-navy/65 hover:text-navy" : "text-white/80 hover:text-white"
+            )}>
               Services
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+              <ChevronDown className={cn(
+                "w-3.5 h-3.5 transition-transform duration-200",
+                servicesOpen && "rotate-180"
+              )} />
             </button>
-            {servicesOpen && (
-              <div className="absolute top-full left-0 mt-2 w-64 bg-navy border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50">
-                {services.map((s) => (
-                  <Link
-                    key={s.href}
-                    href={s.href}
-                    className="block px-4 py-3 text-sm text-white/80 hover:text-white hover:bg-navy-light border-b border-white/5 last:border-0 transition-colors"
-                  >
-                    {s.name}
-                  </Link>
-                ))}
-              </div>
-            )}
+
+            {/* Dropdown panel */}
+            <div className={cn(
+              "absolute top-full left-0 mt-3 w-64 rounded-2xl shadow-xl overflow-hidden z-50",
+              "bg-navy border border-white/10",
+              "transition-all duration-200 origin-top",
+              servicesOpen ? "opacity-100 scale-y-100 pointer-events-auto" : "opacity-0 scale-y-95 pointer-events-none"
+            )}>
+              {services.map((s, i) => (
+                <Link
+                  key={s.href}
+                  href={s.href}
+                  className={cn(
+                    "flex items-center gap-3 px-4 py-3 text-sm text-white/75 hover:text-white hover:bg-navy-light transition-colors",
+                    i < services.length - 1 && "border-b border-white/5"
+                  )}
+                  onClick={() => setServicesOpen(false)}
+                >
+                  <span className="w-1 h-1 rounded-full bg-teal-brand flex-shrink-0" />
+                  {s.name}
+                </Link>
+              ))}
+            </div>
           </div>
 
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`text-sm font-medium transition-colors duration-300 ${
-                scrolled
-                  ? "text-navy/70 hover:text-navy"
-                  : "text-white/80 hover:text-white"
-              }`}
+              className={cn(
+                "text-sm font-medium transition-colors duration-300",
+                light ? "text-navy/65 hover:text-navy" : "text-white/80 hover:text-white",
+                pathname === link.href && light && "text-navy font-semibold",
+                pathname === link.href && !light && "text-white font-semibold"
+              )}
             >
               {link.name}
             </Link>
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="hidden lg:flex items-center gap-3">
+        {/* ── CTA ── */}
+        <div className="hidden lg:flex items-center">
           <a
             href="https://wa.me/918000403090"
             target="_blank"
             rel="noopener noreferrer"
-            className={`px-5 py-2 border text-sm font-semibold rounded-lg transition-all duration-300 font-heading ${
-              scrolled
-                ? "bg-navy border-navy text-white hover:bg-navy-light"
-                : "bg-transparent border-teal-brand text-white hover:bg-teal-brand/10"
-            }`}
+            className={cn(
+              "px-5 py-2.5 rounded-xl text-sm font-semibold font-heading transition-all duration-300",
+              light
+                ? "bg-navy text-white hover:bg-navy-light"
+                : "border border-teal-brand text-white hover:bg-teal-brand/10"
+            )}
           >
             Let&apos;s Talk
           </a>
         </div>
 
-        {/* Mobile Hamburger */}
+        {/* ── Mobile hamburger ── */}
         <button
-          className="lg:hidden p-2"
+          className="lg:hidden p-2 rounded-lg"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
-          <div className="w-5 flex flex-col gap-1">
-            <span
-              className={`block h-0.5 transition-all duration-300 ${
-                scrolled ? "bg-navy" : "bg-white"
-              } ${mobileOpen ? "rotate-45 translate-y-1.5" : ""}`}
-            />
-            <span
-              className={`block h-0.5 transition-all duration-300 ${
-                scrolled ? "bg-navy" : "bg-white"
-              } ${mobileOpen ? "opacity-0" : ""}`}
-            />
-            <span
-              className={`block h-0.5 transition-all duration-300 ${
-                scrolled ? "bg-navy" : "bg-white"
-              } ${mobileOpen ? "-rotate-45 -translate-y-1.5" : ""}`}
-            />
+          <div className="w-5 flex flex-col gap-[5px]">
+            {[
+              mobileOpen ? "rotate-45 translate-y-[7px]"  : "",
+              mobileOpen ? "opacity-0 scale-x-0"          : "",
+              mobileOpen ? "-rotate-45 -translate-y-[7px]": "",
+            ].map((extra, i) => (
+              <span
+                key={i}
+                className={cn(
+                  "block h-0.5 rounded-full transition-all duration-300",
+                  light ? "bg-navy" : "bg-white",
+                  extra
+                )}
+              />
+            ))}
           </div>
         </button>
       </nav>
 
-      {/* Mobile Drawer */}
-      {mobileOpen && (
-        <div
-          className={`lg:hidden border-t px-6 py-6 flex flex-col gap-4 transition-colors duration-300 ${
-            scrolled
-              ? "bg-white border-gray-100"
-              : "bg-navy border-white/10"
-          }`}
-        >
-          <div className="flex flex-col gap-1">
-            <p
-              className={`text-xs font-semibold uppercase tracking-wider mb-2 ${
-                scrolled ? "text-mid-text" : "text-muted"
-              }`}
-            >
-              Services
-            </p>
-            {services.map((s) => (
-              <Link
-                key={s.href}
-                href={s.href}
-                className={`py-2 text-sm transition-colors ${
-                  scrolled
-                    ? "text-navy/70 hover:text-navy"
-                    : "text-white/80 hover:text-white"
-                }`}
-                onClick={() => setMobileOpen(false)}
-              >
-                {s.name}
-              </Link>
-            ))}
+      {/* ── Mobile drawer ── */}
+      <div className={cn(
+        "lg:hidden overflow-hidden transition-all duration-300 ease-in-out",
+        mobileOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+      )}>
+        <div className={cn(
+          "border-t px-6 py-6 flex flex-col gap-5",
+          light ? "bg-white border-slate-100" : "bg-navy border-white/10"
+        )}>
+          {/* Services group */}
+          <div>
+            <p className={cn(
+              "text-[10px] font-bold uppercase tracking-[0.15em] mb-3",
+              light ? "text-slate-400" : "text-white/35"
+            )}>Services</p>
+            <div className="flex flex-col gap-1">
+              {services.map((s) => (
+                <Link
+                  key={s.href}
+                  href={s.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={cn(
+                    "py-2.5 px-3 rounded-lg text-sm transition-colors",
+                    light
+                      ? "text-navy/70 hover:text-navy hover:bg-slate-50"
+                      : "text-white/75 hover:text-white hover:bg-white/5"
+                  )}
+                >
+                  {s.name}
+                </Link>
+              ))}
+            </div>
           </div>
-          <div
-            className={`border-t pt-4 flex flex-col gap-3 ${
-              scrolled ? "border-gray-100" : "border-white/10"
-            }`}
-          >
+
+          {/* Nav links */}
+          <div className={cn(
+            "border-t flex flex-col gap-1 pt-5",
+            light ? "border-slate-100" : "border-white/10"
+          )}>
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium transition-colors ${
-                  scrolled
-                    ? "text-navy/70 hover:text-navy"
-                    : "text-white/80 hover:text-white"
-                }`}
                 onClick={() => setMobileOpen(false)}
+                className={cn(
+                  "py-2.5 px-3 rounded-lg text-sm font-medium transition-colors",
+                  light
+                    ? "text-navy/70 hover:text-navy hover:bg-slate-50"
+                    : "text-white/75 hover:text-white hover:bg-white/5"
+                )}
               >
                 {link.name}
               </Link>
             ))}
-            <a
-              href="https://wa.me/918000403090"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-2 px-5 py-2.5 bg-teal-brand text-navy text-sm font-bold rounded-lg text-center"
-            >
-              Let&apos;s Talk
-            </a>
           </div>
+
+          <a
+            href="https://wa.me/918000403090"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full py-3 bg-teal-brand text-navy text-sm font-bold rounded-xl text-center"
+          >
+            Let&apos;s Talk
+          </a>
         </div>
-      )}
+      </div>
     </header>
   );
 }
