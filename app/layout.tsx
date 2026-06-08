@@ -11,6 +11,14 @@ export const metadata: Metadata = {
     "MeridianGrid is a full-service technology solutions company based in Vadodara, India. Custom software, Google Workspace, AppSheet apps, cloud infrastructure, and AI integrations — serving clients globally.",
   keywords:
     "custom software development, Google Workspace, AppSheet, Firebase, GCP, web design, Vadodara, India, technology solutions",
+  icons: {
+    icon:      [
+      { url: "/icon.png",       type: "image/png" },
+      { url: "/favicon.png",    type: "image/png" },
+    ],
+    apple:     [{ url: "/apple-icon.png", type: "image/png" }],
+    shortcut:  ["/favicon.png"],
+  },
   openGraph: {
     title: "MeridianGrid — Connecting Business to Technology",
     description:
@@ -19,6 +27,7 @@ export const metadata: Metadata = {
     siteName: "MeridianGrid",
     locale: "en_IN",
     type: "website",
+    images: [{ url: "/favicon.png" }],
   },
 };
 
