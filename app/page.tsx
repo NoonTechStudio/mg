@@ -2,6 +2,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import TrustBar from "./components/TrustBar";
 import ServicePillars from "./components/ServicePillars";
+import SaasProducts from "./components/SaasProducts";
 import IndustriesSection from "./components/IndustriesSection";
 import ProcessScroll from "./components/ProcessScroll";
 import AISection from "./components/AISection";
@@ -21,6 +22,7 @@ export default function HomePage() {
         <Hero />
         <TrustBar />
         <ServicePillars />
+        <SaasProducts />
         <IndustriesSection />
         <ProcessScroll />
         <AISection />
