@@ -1,227 +1,235 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { ArrowUpRight, Brain, Scissors, Waves, BarChart3 } from "lucide-react";
+import { ArrowUpRight, Brain, Scissors, Waves, CalendarCheck, CheckCircle2, Monitor, Sparkles } from "lucide-react";
 
 const products = [
   {
     name: "SkyWhale",
-    tagline: "Your Business Online — Without the Hassle",
+    tagline: "Your Business Online — Zero Domain & Zero Hosting Friction",
     description:
-      "Get your business live on the internet without buying a domain or paying for hosting. Just share your info and you're live. Built for small businesses in India who want a professional online presence — zero tech skills required.",
-    features: ["No Domain Needed", "No Hosting Fees", "No Tech Skills", "Live in Minutes"],
-    badge: "Website Builder",
-    href: "https://skywhale.in",
-    gradient: "from-blue-500 to-indigo-600",
-    glowColor: "group-hover:shadow-blue-200",
-    accentColor: "text-blue-600",
-    accentBg: "bg-blue-50",
-    borderHover: "hover:border-blue-300",
+      "Get your business live on the web instantly without domain acquisition or hosting overhead. Built for small-to-mid businesses in India and emerging markets seeking instant digital presence.",
+    features: ["Zero Domain Setup", "Included Managed Hosting", "Instant Deployment", "Mobile Optimized"],
+    badge: "SaaS Tool",
+    status: "Live",
+    href: "https://www.skywhale.in",
+    accentGlow: "from-cyan-500 to-blue-600",
+    badgeBg: "bg-cyan-950/80 text-cyan-300 border-cyan-500/30",
     icon: Waves,
-    stat: { value: "Zero Cost", label: "Domain & Hosting" },
+    stat: { value: "Zero Cost", label: "Hosting Overhead" },
+    mockData: {
+      type: "Website Builder",
+      activeSites: "1,240+ Live Sites",
+      latency: "14ms Edge CDN"
+    }
   },
   {
     name: "FlowVida",
-    tagline: "Run Your Parlor Smarter, Not Harder",
+    tagline: "Smarter Parlor & Salon Operations Platform",
     description:
-      "All-in-one management platform built exclusively for beauty parlors. Handle appointments, customers, staff, and revenue — all from one elegant dashboard. Say goodbye to paper notepads and WhatsApp lists.",
-    features: ["Appointment Booking", "Customer Management", "Staff Scheduling", "Revenue Analytics"],
-    badge: "Parlor Management",
-    href: "https://flowvida.vercel.app",
-    gradient: "from-rose-500 to-red-600",
-    glowColor: "group-hover:shadow-rose-200",
-    accentColor: "text-rose-600",
-    accentBg: "bg-rose-50",
-    borderHover: "hover:border-rose-300",
+      "Comprehensive cloud OS built exclusively for beauty parlors and salon chains. Seamlessly manage appointment schedules, client records, inventory, staff shifts, and daily revenue metrics.",
+    features: ["Online Booking Engine", "Client CRM", "Staff Shift Scheduler", "Revenue Analytics"],
+    badge: "SaaS Tool",
+    status: "Live",
+    href: "https://flowvida.meridiangrid.in",
+    accentGlow: "from-rose-500 to-pink-600",
+    badgeBg: "bg-rose-950/80 text-rose-300 border-rose-500/30",
     icon: Scissors,
-    stat: { value: "500+", label: "Daily Appointments" },
+    stat: { value: "500+", label: "Daily Bookings" },
+    mockData: {
+      type: "Salon Cloud OS",
+      activeSites: "99.4% Slot Utilization",
+      latency: "Real-time Sync"
+    }
   },
   {
     name: "BrainMate",
-    tagline: "Your Business's Digital Brain",
+    tagline: "AI-Powered Lead Tracking & Digital Brain",
     description:
-      "Never lose a lead again. BrainMate tracks all your prospects, sends follow-up reminders, and gives you real-time sales analytics — all in one place. Works completely offline so you're always in control.",
-    features: ["Lead Tracking", "Follow-up Reminders", "Sales Analytics", "Works Offline"],
-    badge: "CRM & Lead Tool",
-    href: "https://brainmate-eight.vercel.app/login",
-    gradient: "from-violet-500 to-purple-600",
-    glowColor: "group-hover:shadow-violet-200",
-    accentColor: "text-violet-600",
-    accentBg: "bg-violet-50",
-    borderHover: "hover:border-violet-300",
+      "Intelligent CRM & lead tracking platform that turns prospects into loyal clients. Automated follow-up notifications, pipeline velocity tracking, and offline sync support for sales teams.",
+    features: ["Pipeline Management", "Automated Reminders", "Sales Analytics", "Offline PWA Sync"],
+    badge: "AI-Powered",
+    status: "Live",
+    href: "https://brainmate.meridiangrid.in",
+    accentGlow: "from-purple-500 to-indigo-600",
+    badgeBg: "bg-purple-950/80 text-purple-300 border-purple-500/30",
     icon: Brain,
     stat: { value: "98%", label: "Follow-up Rate" },
+    mockData: {
+      type: "AI Lead Engine",
+      activeSites: "12,000+ Tracked Leads",
+      latency: "Sub-second RAG"
+    }
   },
   {
     name: "Chérie",
-    tagline: "Appointments Made Beautiful",
+    tagline: "Elegant Booking Engine for Hospitality & Beauty Artists",
     description:
-      "Elegant booking platform crafted for beauty parlors and Mehndi/Heena artists. Let clients book their slot anytime, manage your schedule effortlessly, and deliver a polished, professional experience from the very first tap.",
-    features: ["Online Booking", "Artist Profiles", "Slot Management", "Client Notifications"],
-    badge: "Booking Platform",
-    href: "https://cherie-teal.vercel.app/login",
-    gradient: "from-pink-500 to-fuchsia-600",
-    glowColor: "group-hover:shadow-pink-200",
-    accentColor: "text-pink-600",
-    accentBg: "bg-pink-50",
-    borderHover: "hover:border-pink-300",
-    icon: BarChart3,
-    stat: { value: "24/7", label: "Online Bookings" },
+      "Next-generation online booking platform crafted for independent beauty artists, Mehendi creators, and boutique services. Provides seamless client slot selection and automated WhatsApp alerts.",
+    features: ["24/7 Slot Booking", "Artist Portfolio", "WhatsApp Notifications", "Custom Schedules"],
+    badge: "SaaS Tool",
+    status: "Live",
+    href: "https://cherie.meridiangrid.in",
+    accentGlow: "from-amber-500 to-pink-600",
+    badgeBg: "bg-amber-950/80 text-amber-300 border-amber-500/30",
+    icon: CalendarCheck,
+    stat: { value: "24/7", label: "Automated Bookings" },
+    mockData: {
+      type: "Booking Platform",
+      activeSites: "Direct Link Booking",
+      latency: "Instant Notification"
+    }
   },
 ];
 
+
 export default function SaasProducts() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const ob = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setVisible(true); },
-      { threshold: 0.08 }
-    );
-    if (ref.current) ob.observe(ref.current);
-    return () => ob.disconnect();
-  }, []);
-
   return (
-    <section className="relative bg-white overflow-hidden py-24">
-      {/* Grid dot texture */}
-      <div className="absolute inset-0 grid-dots-bg pointer-events-none opacity-100" />
+    <section id="saas" className="relative bg-slate-950 py-24 lg:py-32 overflow-hidden">
+      {/* Background Glow Accents */}
+      <div className="absolute top-1/3 right-10 w-96 h-96 glow-spot-purple opacity-20 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 left-10 w-96 h-96 glow-spot-cyan opacity-20 blur-3xl pointer-events-none" />
+      <div className="absolute inset-0 grid-pattern-dark opacity-50 pointer-events-none" />
 
-      {/* Subtle top gradient accent */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-teal-brand/40 to-transparent" />
-
-      <div ref={ref} className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
         {/* Header */}
-        <div className={cn(
-          "text-center mb-16 transition-all duration-700",
-          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-        )}>
-          <Badge
-            variant="outline"
-            className="mb-4 text-teal-brand border-teal-brand/30 bg-teal-brand/5 font-heading tracking-widest text-[11px] uppercase"
-          >
-            Our SaaS Products
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <Badge variant="outline" className="mb-4 border-purple-500/30 bg-purple-950/40 text-purple-300 font-mono tracking-widest text-[11px] uppercase py-1 px-3">
+            In-House Products Showcase
           </Badge>
-          <h2 className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-navy mb-4">
-            Tools we built.<br className="hidden sm:block" /> Ready for you to use today.
+          <h2 className="font-heading font-extrabold text-4xl sm:text-5xl text-white tracking-tight mb-6">
+            Proprietary SaaS Solutions. <br className="hidden sm:inline" />
+            <span className="text-gradient-purple">Engineered &amp; Scaled in House.</span>
           </h2>
-          <p className="text-mid-text text-lg max-w-2xl mx-auto leading-relaxed">
-            Beyond client projects, MeridianGrid builds its own products — purpose-built SaaS
-            tools solving real problems for Indian businesses.
+          <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
+            Beyond engineering custom software for our enterprise clients, MeridianGrid designs, deploys, 
+            and operates proprietary SaaS tools that solve real operational bottlenecks for forward-thinking businesses.
           </p>
         </div>
 
-        {/* Cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {products.map(({ name, tagline, description, features, badge, href, gradient, glowColor, accentColor, accentBg, borderHover, icon: Icon, stat }, i) => (
-            <a
-              key={name}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(
-                "group relative bg-white rounded-2xl border border-slate-200 overflow-hidden",
-                "transition-all duration-400",
-                "hover:-translate-y-1.5 hover:shadow-2xl hover:border-transparent",
-                glowColor,
-                borderHover,
-                visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              )}
-              style={{ transitionDelay: `${100 + i * 100}ms` }}
-            >
-              {/* Top gradient bar */}
-              <div className={cn("h-1 w-full bg-gradient-to-r", gradient)} />
+        {/* 2x2 SaaS Product Mockup Cards Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {products.map((p, i) => {
+            const IconC = p.icon;
+            return (
+              <motion.div
+                key={p.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="group relative rounded-3xl glass-card border border-slate-800 p-6 sm:p-8 flex flex-col justify-between glass-card-hover overflow-hidden"
+              >
+                {/* Top Accent Gradient Bar */}
+                <div className={cn("absolute top-0 left-0 right-0 h-1 bg-gradient-to-r", p.accentGlow)} />
 
-              <div className="p-5 sm:p-7">
-                {/* Header row */}
-                <div className="flex items-start justify-between mb-5">
-                  <div className="flex items-center gap-3">
-                    <div className={cn(
-                      "w-12 h-12 rounded-2xl bg-gradient-to-br flex items-center justify-center text-white shadow-sm",
-                      "transition-transform duration-300 group-hover:scale-110",
-                      gradient
-                    )}>
-                      <Icon className="w-5 h-5" />
+                {/* Card Header & Badge row */}
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                      <div className={cn("w-12 h-12 rounded-2xl bg-gradient-to-br flex items-center justify-center text-white shadow-lg", p.accentGlow)}>
+                        <IconC className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-heading font-extrabold text-2xl text-white group-hover:text-cyan-300 transition-colors">
+                            {p.name}
+                          </h3>
+                          <span className="flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-950/80 text-emerald-400 border border-emerald-500/30">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                            {p.status}
+                          </span>
+                        </div>
+                        <Badge variant="outline" className={cn("mt-1 text-[10px] font-mono uppercase tracking-wider", p.badgeBg)}>
+                          {p.badge}
+                        </Badge>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-heading font-bold text-navy text-xl leading-none mb-1">
-                        {name}
-                      </h3>
-                      <Badge variant="secondary" className={cn("text-[10px] font-semibold tracking-wider uppercase", accentBg, accentColor, "border-0")}>
-                        {badge}
-                      </Badge>
-                    </div>
-                  </div>
-                  <div className={cn(
-                    "w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300",
-                    "opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-1",
-                    accentBg, accentColor
-                  )}>
-                    <ArrowUpRight className="w-4 h-4" />
-                  </div>
-                </div>
 
-                {/* Tagline */}
-                <p className={cn("font-heading font-semibold text-base mb-2", accentColor)}>
-                  {tagline}
-                </p>
-
-                {/* Description */}
-                <p className="text-mid-text text-sm leading-relaxed mb-5">
-                  {description}
-                </p>
-
-                {/* Feature pills */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {features.map((f) => (
-                    <span
-                      key={f}
-                      className={cn(
-                        "text-[11px] font-semibold px-3 py-1 rounded-full",
-                        accentBg, accentColor
-                      )}
+                    <a
+                      href={p.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 group-hover:text-cyan-300 group-hover:border-cyan-500/40 transition-all"
                     >
-                      {f}
-                    </span>
-                  ))}
+                      <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </a>
+                  </div>
+
+                  {/* Dashboard Mock Card Frame */}
+                  <div className="rounded-2xl bg-slate-950 border border-slate-800/80 p-4 mb-6 relative overflow-hidden font-mono text-xs">
+                    <div className="flex items-center justify-between pb-2 mb-3 border-b border-slate-900 text-[10px] text-slate-500">
+                      <span className="flex items-center gap-1.5">
+                        <Monitor className="w-3.5 h-3.5 text-cyan-400" />
+                        {p.mockData.type} Frame
+                      </span>
+                      <span className="text-slate-400">{p.mockData.latency}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between text-slate-300 text-xs">
+                      <div>
+                        <div className="text-[10px] text-slate-500 uppercase">Live Output Metric</div>
+                        <div className="font-bold text-white text-sm">{p.stat.value}</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-[10px] text-slate-500 uppercase">System Status</div>
+                        <div className="text-cyan-400 font-semibold">{p.mockData.activeSites}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="font-heading font-semibold text-base text-slate-200 mb-3">
+                    {p.tagline}
+                  </p>
+                  <p className="text-slate-400 text-xs leading-relaxed mb-6">
+                    {p.description}
+                  </p>
+
+                  {/* Features Grid */}
+                  <div className="grid grid-cols-2 gap-2 mb-6">
+                    {p.features.map((f, idx) => (
+                      <div key={idx} className="flex items-center gap-2 text-xs text-slate-300">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />
+                        <span>{f}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
-                {/* Stat + CTA row */}
-                <div className="flex items-center justify-between pt-5 border-t border-slate-100">
-                  <div>
-                    <p className={cn("font-heading font-bold text-2xl", accentColor)}>{stat.value}</p>
-                    <p className="text-slate-text text-xs">{stat.label}</p>
+                {/* Footer Action */}
+                <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                  <div className="text-xs text-slate-400">
+                    Built by <span className="text-white font-medium">MeridianGrid Lab</span>
                   </div>
-                  <span className={cn(
-                    "inline-flex items-center gap-1.5 text-sm font-semibold",
-                    accentColor,
-                    "group-hover:gap-2.5 transition-all duration-200"
-                  )}>
-                    Visit {name}
-                    <ArrowUpRight className="w-4 h-4" />
-                  </span>
+                  <a
+                    href={p.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-heading font-semibold text-cyan-400 hover:text-cyan-300 transition-colors"
+                  >
+                    <span>Launch Product</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
                 </div>
-              </div>
-            </a>
-          ))}
+
+              </motion.div>
+            );
+          })}
         </div>
 
-        {/* Bottom note */}
-        <div className={cn(
-          "text-center mt-12 transition-all duration-700 delay-500",
-          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-        )}>
-          <p className="text-slate-text text-sm">
-            All products are built and maintained by the MeridianGrid team.{" "}
-            <a href="/contact" className="text-teal-brand font-semibold hover:underline underline-offset-2">
-              Need a custom SaaS? Let&apos;s build one together →
+        {/* Bottom Callout */}
+        <div className="mt-16 text-center">
+          <p className="text-slate-400 text-sm">
+            Have a breakthrough product idea or need custom SaaS architecture?{" "}
+            <a href="/contact" className="text-cyan-400 font-semibold hover:underline underline-offset-4">
+              Let&apos;s build and scale your SaaS platform together →
             </a>
           </p>
         </div>
+
       </div>
     </section>
   );

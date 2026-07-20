@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import SectionLabel from "../components/SectionLabel";
+import { Badge } from "@/components/ui/badge";
+import { Mail, Phone, MapPin, Clock, ShieldCheck, CheckCircle2, ArrowRight, Send, MessageCircle } from "lucide-react";
 
 interface FormData {
   name: string;
@@ -35,7 +36,6 @@ export default function ContactPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate submit then show success
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
@@ -43,48 +43,66 @@ export default function ContactPage() {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200">
       <Navbar />
-      <main className="min-h-screen bg-surface pt-24">
-        {/* Header */}
-        <div className="bg-navy py-16 text-center px-6">
-          <div className="max-w-2xl mx-auto">
-            <SectionLabel text="Get In Touch" />
-            <h1 className="font-heading font-bold text-4xl lg:text-5xl text-white mb-4">
-              Let&apos;s start a conversation.
-            </h1>
-            <p className="text-white/50 text-lg">
-              Tell us about your project and we&apos;ll respond within one business day.
-            </p>
-          </div>
+      
+      <main className="relative pt-36 sm:pt-44 pb-24 overflow-hidden">
+        {/* Glow backdrop accents */}
+        <div className="absolute top-1/4 left-10 w-96 h-96 glow-spot-cyan opacity-20 blur-3xl pointer-events-none" />
+        <div className="absolute top-1/3 right-10 w-96 h-96 glow-spot-purple opacity-20 blur-3xl pointer-events-none" />
+        <div className="absolute inset-0 grid-pattern-dark opacity-40 pointer-events-none" />
+
+        {/* Header Hero */}
+        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center mb-16">
+          <Badge variant="outline" className="mb-4 border-cyan-500/30 bg-cyan-950/40 text-cyan-300 font-mono tracking-widest text-[11px] uppercase py-1 px-3">
+            Contact &amp; Engineering Inquiry
+          </Badge>
+          <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight mb-4 leading-tight">
+            Let&apos;s Architect Something <span className="text-gradient-cyan">Exceptional.</span>
+          </h1>
+          <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            Tell us about your project vision, timeline, and technical needs. 
+            Our engineering lead will evaluate your scope and respond within 4 hours.
+          </p>
         </div>
 
-        {/* Form + Info */}
-        <div className="max-w-6xl mx-auto px-6 lg:px-8 py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-            {/* Form */}
-            <div className="lg:col-span-3">
+        {/* Main Grid: Form + Info Sidebar */}
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+
+            {/* Left: Contact Form Card */}
+            <div className="lg:col-span-7">
               {submitted ? (
-                <div className="bg-white border border-teal-brand/30 rounded-2xl p-12 text-center shadow-sm">
-                  <div className="w-16 h-16 bg-teal-brand/15 rounded-full flex items-center justify-center mx-auto mb-5">
-                    <svg className="w-8 h-8 text-teal-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
+                <div className="rounded-3xl glass-card border border-emerald-500/30 p-10 sm:p-14 text-center shadow-2xl">
+                  <div className="w-16 h-16 rounded-2xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-emerald-950/50">
+                    <CheckCircle2 className="w-8 h-8" />
                   </div>
-                  <h2 className="font-heading font-bold text-2xl text-navy mb-3">Message Sent!</h2>
-                  <p className="text-mid-text">
-                    Thanks for reaching out. We&apos;ll get back to you within one business day.
+                  <h2 className="font-heading font-extrabold text-3xl text-white mb-3">Inquiry Received!</h2>
+                  <p className="text-slate-300 text-sm leading-relaxed max-w-md mx-auto mb-8">
+                    Thank you for reaching out. A MeridianGrid engineering principal will review your proposal and respond within 4 business hours.
                   </p>
+                  <button
+                    onClick={() => setSubmitted(false)}
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 text-xs font-heading font-semibold hover:text-white hover:border-cyan-400 transition-all"
+                  >
+                    Submit Another Requirement
+                  </button>
                 </div>
               ) : (
                 <form
                   onSubmit={handleSubmit}
-                  className="bg-white rounded-2xl p-8 shadow-sm border border-blue-brand/10 space-y-5"
+                  className="rounded-3xl glass-card border border-slate-800 p-6 sm:p-10 shadow-2xl space-y-6"
                 >
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="text-xs font-mono text-cyan-400 uppercase tracking-widest pb-2 border-b border-slate-900 flex items-center justify-between">
+                    <span>Project Scope Form</span>
+                    <span className="text-slate-400">* Required Fields</span>
+                  </div>
+
+                  {/* Name & Email */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-navy mb-2">
-                        Name <span className="text-red-500">*</span>
+                      <label className="block text-xs font-mono text-slate-300 mb-2 font-medium">
+                        FULL NAME <span className="text-cyan-400">*</span>
                       </label>
                       <input
                         type="text"
@@ -92,13 +110,13 @@ export default function ContactPage() {
                         required
                         value={form.name}
                         onChange={handleChange}
-                        placeholder="Your full name"
-                        className="w-full border border-blue-brand/20 rounded-xl px-4 py-3 text-navy placeholder-muted focus:outline-none focus:border-teal-brand focus:ring-1 focus:ring-teal-brand transition-colors text-sm"
+                        placeholder="John Doe"
+                        className="w-full rounded-xl bg-slate-950/90 border border-slate-800 px-4 py-3 text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-navy mb-2">
-                        Email <span className="text-red-500">*</span>
+                      <label className="block text-xs font-mono text-slate-300 mb-2 font-medium">
+                        BUSINESS EMAIL <span className="text-cyan-400">*</span>
                       </label>
                       <input
                         type="email"
@@ -107,13 +125,15 @@ export default function ContactPage() {
                         value={form.email}
                         onChange={handleChange}
                         placeholder="you@company.com"
-                        className="w-full border border-blue-brand/20 rounded-xl px-4 py-3 text-navy placeholder-muted focus:outline-none focus:border-teal-brand focus:ring-1 focus:ring-teal-brand transition-colors text-sm"
+                        className="w-full rounded-xl bg-slate-950/90 border border-slate-800 px-4 py-3 text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
                       />
                     </div>
                   </div>
+
+                  {/* Phone */}
                   <div>
-                    <label className="block text-sm font-medium text-navy mb-2">
-                      Phone <span className="text-muted text-xs">(optional)</span>
+                    <label className="block text-xs font-mono text-slate-300 mb-2 font-medium">
+                      PHONE / WHATSAPP <span className="text-slate-400">(Optional)</span>
                     </label>
                     <input
                       type="tel"
@@ -121,46 +141,56 @@ export default function ContactPage() {
                       value={form.phone}
                       onChange={handleChange}
                       placeholder="+91 98765 43210"
-                      className="w-full border border-blue-brand/20 rounded-xl px-4 py-3 text-navy placeholder-muted focus:outline-none focus:border-teal-brand focus:ring-1 focus:ring-teal-brand transition-colors text-sm"
+                      className="w-full rounded-xl bg-slate-950/90 border border-slate-800 px-4 py-3 text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
                     />
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-navy mb-2">Service</label>
-                    <select
-                      name="service"
-                      value={form.service}
-                      onChange={handleChange}
-                      className="w-full border border-blue-brand/20 rounded-xl px-4 py-3 text-navy focus:outline-none focus:border-teal-brand focus:ring-1 focus:ring-teal-brand transition-colors text-sm bg-white"
-                    >
-                      <option value="">Select a service...</option>
-                      <option>Web Design & Development</option>
-                      <option>Custom Software / SaaS</option>
-                      <option>Google Workspace Setup</option>
-                      <option>AppSheet Application</option>
-                      <option>Cloud & Firebase</option>
-                      <option>AI Integration</option>
-                      <option>Other</option>
-                    </select>
+
+                  {/* Service & Budget Select */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-xs font-mono text-slate-300 mb-2 font-medium">
+                        ENGINEERING PILLAR
+                      </label>
+                      <select
+                        name="service"
+                        value={form.service}
+                        onChange={handleChange}
+                        className="w-full rounded-xl bg-slate-950/90 border border-slate-800 px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+                      >
+                        <option value="" className="bg-slate-950 text-slate-400">Select a pillar...</option>
+                        <option value="Digital Experiences" className="bg-slate-950 text-white">Digital Experiences &amp; Web Design</option>
+                        <option value="Software Engineering" className="bg-slate-950 text-white">Custom Software &amp; SaaS</option>
+                        <option value="Google Workspace" className="bg-slate-950 text-white">Google Workspace Enterprise</option>
+                        <option value="AppSheet" className="bg-slate-950 text-white">AppSheet Applications</option>
+                        <option value="Cloud & AI" className="bg-slate-950 text-white">Cloud &amp; AI Automations</option>
+                        <option value="Other" className="bg-slate-950 text-white">Other Technical Consultation</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-mono text-slate-300 mb-2 font-medium">
+                        ESTIMATED BUDGET
+                      </label>
+                      <select
+                        name="budget"
+                        value={form.budget}
+                        onChange={handleChange}
+                        className="w-full rounded-xl bg-slate-950/90 border border-slate-800 px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+                      >
+                        <option value="" className="bg-slate-950 text-slate-400">Select a budget range...</option>
+                        <option value="Under ₹50k" className="bg-slate-950 text-white">Under ₹50,000</option>
+                        <option value="₹50k - ₹1.5L" className="bg-slate-950 text-white">₹50,000 – ₹1,50,000</option>
+                        <option value="₹1.5L - ₹4L" className="bg-slate-950 text-white">₹1,50,000 – ₹4,00,000</option>
+                        <option value="₹4L+" className="bg-slate-950 text-white">₹4,00,000+ Enterprise</option>
+                        <option value="Discuss" className="bg-slate-950 text-white">Flexible / Open for Discussion</option>
+                      </select>
+                    </div>
                   </div>
+
+                  {/* Message */}
                   <div>
-                    <label className="block text-sm font-medium text-navy mb-2">Project Budget</label>
-                    <select
-                      name="budget"
-                      value={form.budget}
-                      onChange={handleChange}
-                      className="w-full border border-blue-brand/20 rounded-xl px-4 py-3 text-navy focus:outline-none focus:border-teal-brand focus:ring-1 focus:ring-teal-brand transition-colors text-sm bg-white"
-                    >
-                      <option value="">Select a range...</option>
-                      <option>Under ₹25,000</option>
-                      <option>₹25,000 – ₹75,000</option>
-                      <option>₹75,000 – ₹2,00,000</option>
-                      <option>₹2,00,000+</option>
-                      <option>Let&apos;s discuss</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-navy mb-2">
-                      Message <span className="text-red-500">*</span>
+                    <label className="block text-xs font-mono text-slate-300 mb-2 font-medium">
+                      PROJECT DESCRIPTION <span className="text-cyan-400">*</span>
                     </label>
                     <textarea
                       name="message"
@@ -168,97 +198,120 @@ export default function ContactPage() {
                       value={form.message}
                       onChange={handleChange}
                       rows={5}
-                      placeholder="Tell us about your project, goals, and timeline..."
-                      className="w-full border border-blue-brand/20 rounded-xl px-4 py-3 text-navy placeholder-muted focus:outline-none focus:border-teal-brand focus:ring-1 focus:ring-teal-brand transition-colors text-sm resize-none"
+                      placeholder="Detail your goals, required features, technical constraints, and target launch timeline..."
+                      className="w-full rounded-xl bg-slate-950/90 border border-slate-800 px-4 py-3 text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all resize-none"
                     />
                   </div>
+
+                  {/* Submit Button */}
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-3.5 bg-navy text-white font-semibold rounded-xl hover:bg-navy-light transition-colors font-heading flex items-center justify-center gap-2 disabled:opacity-60"
+                    className="relative group w-full py-4 rounded-xl font-heading font-semibold text-xs text-white overflow-hidden shadow-xl shadow-cyan-950/60 disabled:opacity-50"
                   >
-                    {loading ? "Sending..." : "Send Message →"}
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-indigo-600 to-purple-600 opacity-90 group-hover:opacity-100 transition-opacity" />
+                    <span className="relative z-10 flex items-center justify-center gap-2">
+                      <span>{loading ? "Transmitting Proposal..." : "Submit Inquiry & Request Scope Call"}</span>
+                      <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </span>
                   </button>
                 </form>
               )}
             </div>
 
-            {/* Contact Info */}
-            <div className="lg:col-span-2 space-y-6">
-              <div className="bg-white rounded-2xl p-7 border border-blue-brand/10 shadow-sm">
-                <h3 className="font-heading font-bold text-lg text-navy mb-5">Contact Details</h3>
-                <div className="space-y-4 text-sm">
-                  {[
-                    {
-                      icon: "📱",
-                      label: "WhatsApp",
-                      value: "+91 80004 03090",
-                      href: "https://wa.me/918000403090",
-                    },
-                    {
-                      icon: "✉️",
-                      label: "Email",
-                      value: "hello@meridiangrid.in",
-                      href: "mailto:hello@meridiangrid.in",
-                    },
-                    {
-                      icon: "📍",
-                      label: "Location",
-                      value: "Vadodara, Gujarat, India",
-                      href: undefined,
-                    },
-                    {
-                      icon: "🕐",
-                      label: "Hours",
-                      value: "Mon–Sat, 9am–7pm IST",
-                      href: undefined,
-                    },
-                  ].map((item) => (
-                    <div key={item.label} className="flex items-start gap-3">
-                      <span className="text-base flex-shrink-0 mt-0.5">{item.icon}</span>
-                      <div>
-                        <div className="text-muted text-xs mb-0.5">{item.label}</div>
-                        {item.href ? (
-                          <a
-                            href={item.href}
-                            className="text-navy font-medium hover:text-teal-brand transition-colors"
-                          >
-                            {item.value}
-                          </a>
-                        ) : (
-                          <span className="text-navy font-medium">{item.value}</span>
-                        )}
-                      </div>
+            {/* Right: Contact Information Cards */}
+            <div className="lg:col-span-5 space-y-6">
+
+              {/* Direct Channels Card */}
+              <div className="rounded-3xl glass-card border border-slate-800 p-7 shadow-xl space-y-5">
+                <div className="text-xs font-mono text-purple-400 uppercase tracking-widest pb-3 border-b border-slate-800">
+                  Direct Engineering Channels
+                </div>
+
+                <div className="space-y-4">
+                  {/* WhatsApp */}
+                  <a
+                    href="https://wa.me/918000403090"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 p-3.5 rounded-2xl bg-slate-950 border border-slate-800 hover:border-emerald-500/40 hover:bg-slate-900 transition-all group"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 flex items-center justify-center flex-shrink-0">
+                      <MessageCircle className="w-5 h-5" />
                     </div>
-                  ))}
+                    <div>
+                      <div className="text-[10px] font-mono text-slate-400 uppercase">WhatsApp Instant Line</div>
+                      <div className="text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">+91 80004 03090</div>
+                    </div>
+                  </a>
+
+                  {/* Email */}
+                  <a
+                    href="mailto:hello@meridiangrid.in"
+                    className="flex items-center gap-4 p-3.5 rounded-2xl bg-slate-950 border border-slate-800 hover:border-cyan-500/40 hover:bg-slate-900 transition-all group"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-cyan-950/80 border border-cyan-500/30 text-cyan-400 flex items-center justify-center flex-shrink-0">
+                      <Mail className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-mono text-slate-400 uppercase">Direct Email</div>
+                      <div className="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors">hello@meridiangrid.in</div>
+                    </div>
+                  </a>
+
+                  {/* Location */}
+                  <div className="flex items-center gap-4 p-3.5 rounded-2xl bg-slate-950 border border-slate-800">
+                    <div className="w-10 h-10 rounded-xl bg-purple-950/80 border border-purple-500/30 text-purple-400 flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-mono text-slate-400 uppercase">Engineering HQ</div>
+                      <div className="text-xs font-semibold text-slate-200">Vadodara, Gujarat, India 🇮🇳</div>
+                    </div>
+                  </div>
+
+                  {/* Hours */}
+                  <div className="flex items-center gap-4 p-3.5 rounded-2xl bg-slate-950 border border-slate-800">
+                    <div className="w-10 h-10 rounded-xl bg-indigo-950/80 border border-indigo-500/30 text-indigo-400 flex items-center justify-center flex-shrink-0">
+                      <Clock className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-mono text-slate-400 uppercase">Working Hours</div>
+                      <div className="text-xs font-semibold text-slate-200">Mon–Sat, 9:00 AM – 7:00 PM IST</div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="bg-teal-brand/10 border border-teal-brand/20 rounded-2xl p-6">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="w-2 h-2 rounded-full bg-teal-brand animate-pulse" />
-                  <span className="text-teal-brand font-semibold text-sm">Accepting new projects</span>
+              {/* Status Pill Card */}
+              <div className="rounded-2xl bg-emerald-950/40 border border-emerald-500/30 p-5 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+                  <div>
+                    <div className="text-xs font-bold text-emerald-300">Accepting Q3 Client Cohort</div>
+                    <div className="text-[10px] text-slate-300">Average first response: &lt; 4 Hours</div>
+                  </div>
                 </div>
-                <p className="text-mid-text text-sm">
-                  Typical response time: <strong className="text-navy">Under 4 hours</strong>
+              </div>
+
+              {/* Google Partner Badge Card */}
+              <div className="rounded-2xl glass-card border border-slate-800 p-5 text-center">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-950 border border-slate-800 text-cyan-400 text-xs font-mono font-bold mb-2">
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>GOOGLE CLOUD PARTNER</span>
+                </div>
+                <p className="text-slate-400 text-[11px]">
+                  Certified reseller &amp; architect for Google Workspace Enterprise &amp; GCP
                 </p>
               </div>
 
-              <div className="bg-white rounded-2xl p-6 border border-blue-brand/10 text-center">
-                <div className="inline-block bg-white border-2 border-blue-brand/20 rounded-xl px-6 py-3 mb-3">
-                  <span className="font-heading font-bold text-navy text-sm tracking-wide">
-                    GOOGLE PARTNER
-                  </span>
-                </div>
-                <p className="text-muted text-xs">
-                  Certified reseller for Google Workspace & GCP
-                </p>
-              </div>
             </div>
+
           </div>
         </div>
       </main>
+
       <Footer />
-    </>
+    </div>
   );
 }

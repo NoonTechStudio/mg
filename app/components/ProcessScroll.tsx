@@ -1,109 +1,103 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { Search, Map, Zap, Rocket } from "lucide-react";
 
 const steps = [
   {
     number: "01",
     icon: Search,
-    title: "Discovery",
+    title: "Discovery & Scope",
     description:
-      "Deep-dive workshops to map your business goals, user journeys, and technical constraints. We produce a detailed brief, scope, and timeline before writing a single line of code — zero surprises.",
+      "Deep-dive technical workshops to map your business goals, user journeys, and infrastructure boundaries. We define clear SLAs, deliverables, and timelines before writing a single line of code.",
+    badge: "Sprint 0"
   },
   {
     number: "02",
     icon: Map,
-    title: "Architecture",
+    title: "Architecture & Specs",
     description:
-      "System design, ER diagrams, API contracts, and wireframes. We align on tech stack, infrastructure, and security model before build. You see exactly what you're getting before we start.",
+      "System design, database schemas, API contracts, and high-fidelity Framer Motion prototypes. We align on tech stack, security policies, and GCP Cloud architecture before sprint execution.",
+    badge: "Design Phase"
   },
   {
     number: "03",
     icon: Zap,
-    title: "Agile Build",
+    title: "Agile Development",
     description:
-      "Two-week sprints with a working demo every Friday. Shared project board and Slack channel. Feedback actioned quickly — we never work in black boxes.",
+      "Two-week sprints with working software demos every Friday. Shared Slack/Teams channel, live staging environment, and transparent progress boards — zero black-box development.",
+    badge: "Sprint Build"
   },
   {
     number: "04",
     icon: Rocket,
-    title: "Launch & Train",
+    title: "Deployment & Training",
     description:
-      "Zero-downtime deployment on your preferred cloud. Full documentation, recorded walkthroughs, and 30-day post-launch support. You own everything — code, infrastructure, knowledge.",
+      "Zero-downtime production deployment on your preferred cloud. Full documentation, recorded team walkthroughs, and 30-day post-launch engineering support.",
+    badge: "Production Launch"
   },
 ];
 
 export default function ProcessScroll() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const ob = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
-    );
-    if (ref.current) ob.observe(ref.current);
-    return () => ob.disconnect();
-  }, []);
-
   return (
-    <section id="process" className="relative bg-white overflow-hidden py-24">
-      {/* Subtle dot pattern */}
-      <div className="absolute inset-0 grid-dots-bg pointer-events-none opacity-100" />
+    <section id="process" className="relative bg-slate-950 py-24 border-t border-slate-800/80 overflow-hidden">
+      {/* Background Glow */}
+      <div className="absolute top-1/2 right-10 w-96 h-96 glow-spot-purple opacity-15 blur-3xl pointer-events-none" />
+      <div className="absolute inset-0 grid-pattern-dark opacity-40 pointer-events-none" />
 
-      <div ref={ref} className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
-        <div className={cn(
-          "text-center mb-14 transition-all duration-700",
-          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-        )}>
-          <Badge variant="outline" className="mb-4 text-teal-brand border-teal-brand/30 bg-teal-brand/5 font-heading tracking-widest text-[11px] uppercase">
-            How We Work
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <Badge variant="outline" className="mb-4 border-cyan-500/30 bg-cyan-950/40 text-cyan-300 font-mono tracking-widest text-[11px] uppercase py-1 px-3">
+            Agile Engineering Methodology
           </Badge>
-          <h2 className="font-heading font-bold text-4xl lg:text-5xl text-navy mb-4">
-            No black boxes. Full transparency.
+          <h2 className="font-heading font-extrabold text-4xl sm:text-5xl text-white tracking-tight mb-4">
+            Zero Black Boxes. <span className="text-gradient-purple">Total Delivery Transparency.</span>
           </h2>
+          <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
+            Our structured 4-step engineering process guarantees on-time delivery, predictable budgets, and high code quality.
+          </p>
         </div>
 
-        {/* Steps */}
-        <div className="relative">
-          {/* Connector — desktop */}
-          <div className="hidden lg:block absolute top-[52px] left-[12.5%] right-[12.5%] h-px bg-slate-200 z-0">
-            {visible && <div className="h-full bg-teal-brand/40 draw-line" />}
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
-            {steps.map(({ number, icon: Icon, title, description }, i) => (
-              <Card
-                key={number}
-                className={cn(
-                  "border-slate-200 bg-white card-lift transition-all duration-700",
-                  visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                )}
-                style={{ transitionDelay: `${i * 140}ms` }}
-              >
-                <CardContent className="p-6 pt-7">
-                  {/* Icon + number row */}
-                  <div className="flex items-start justify-between mb-5">
-                    <div className="w-12 h-12 bg-surface border border-blue-brand/15 rounded-2xl flex items-center justify-center text-blue-brand">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <span className="font-heading font-bold text-4xl text-navy/6 leading-none select-none">
-                      {number}
-                    </span>
+        {/* 4 Process Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {steps.map(({ number, icon: Icon, title, description, badge }, i) => (
+            <motion.div
+              key={number}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              className="rounded-3xl glass-card border border-slate-800 p-6 sm:p-7 glass-card-hover flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-12 h-12 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-cyan-400">
+                    <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="font-heading font-bold text-lg text-navy mb-3">{title}</h3>
-                  <p className="text-mid-text text-sm leading-relaxed">{description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                  <span className="font-heading font-black text-3xl text-slate-800 select-none">
+                    {number}
+                  </span>
+                </div>
+
+                <Badge variant="outline" className="mb-3 text-[10px] font-mono border-slate-800 text-purple-400">
+                  {badge}
+                </Badge>
+                
+                <h3 className="font-heading font-bold text-xl text-white mb-3">{title}</h3>
+                <p className="text-slate-400 text-xs leading-relaxed">{description}</p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-slate-900 flex items-center justify-between text-[10px] font-mono text-slate-500">
+                <span>Phase {number}</span>
+                <span className="text-emerald-400">Validated</span>
+              </div>
+            </motion.div>
+          ))}
         </div>
+
       </div>
     </section>
   );

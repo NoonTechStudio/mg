@@ -1,31 +1,54 @@
-import { Separator } from "@/components/ui/separator";
+"use client";
+
+import { motion } from "framer-motion";
 
 const techStack = [
-  "Next.js", "React", "Node.js", "Python", "TypeScript",
-  "PostgreSQL", "Flutter", "AWS", "Supabase", "Tailwind CSS",
-  "FastAPI", "Firebase", "Google Cloud", "AppSheet",
-  "Google Workspace", "Framer Motion",
+  "GCP Cloud", 
+  "Google Workspace", 
+  "Next.js 16", 
+  "React 19", 
+  "TypeScript", 
+  "Node.js", 
+  "Python", 
+  "AppSheet Apps", 
+  "PostgreSQL", 
+  "Firebase", 
+  "Framer Motion", 
+  "Tailwind CSS v4", 
+  "LLM AI Agents", 
+  "Vector Search DB", 
+  "Docker Containers", 
+  "REST & GraphQL"
 ];
 
 export default function TrustBar() {
   const doubled = [...techStack, ...techStack];
+
   return (
-    <section className="relative bg-white overflow-hidden py-0">
-      <Separator className="bg-blue-brand/10" />
-      <div className="py-5 overflow-hidden">
-        <div className="flex marquee-track gap-0 w-max">
-          {doubled.map((tech, i) => (
+    <section className="relative bg-slate-950 border-t border-b border-slate-800/80 py-5 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 mb-3 text-center">
+        <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
+          ENTERPRISE TECH STACK &amp; FRAMEWORKS
+        </span>
+      </div>
+
+      <div className="flex overflow-hidden select-none">
+        <motion.div
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 30, ease: "linear", repeat: Infinity }}
+          className="flex items-center gap-3.5 w-max"
+        >
+          {doubled.map((tech, idx) => (
             <div
-              key={i}
-              className="flex items-center gap-2.5 px-5 py-2 mx-2 border border-slate-200 rounded-full bg-white whitespace-nowrap select-none"
+              key={idx}
+              className="whitespace-nowrap flex-shrink-0 h-9 inline-flex items-center gap-2.5 px-5 rounded-full glass-pill border border-slate-800 text-xs font-mono text-slate-300 hover:border-cyan-500/40 hover:text-white transition-colors"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-teal-brand flex-shrink-0" />
-              <span className="text-mid-text text-sm font-medium font-heading">{tech}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0 animate-pulse" />
+              <span className="leading-none whitespace-nowrap">{tech}</span>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
-      <Separator className="bg-blue-brand/10" />
     </section>
   );
 }

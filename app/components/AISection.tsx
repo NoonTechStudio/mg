@@ -1,159 +1,151 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { Bot, Zap, Database, GitBranch } from "lucide-react";
+import { Bot, Zap, Database, GitBranch, CheckCircle2 } from "lucide-react";
 
 const aiCards = [
   {
     icon: Bot,
-    color: "text-violet-600",
-    bg: "bg-violet-50",
-    title: "AI Agent",
-    tagline: "Software that thinks, decides, and acts on your behalf.",
+    color: "text-purple-400",
+    badgeBg: "bg-purple-950/80 text-purple-300 border-purple-500/30",
+    title: "Autonomous AI Agents",
+    tagline: "Software that understands goals, makes decisions, and executes workflows.",
     description:
-      "An AI Agent uses a large language model as its brain to understand goals, plan steps, use tools, and complete complex tasks — without a human clicking through each step.",
+      "AI Agents leverage large language models (LLMs) to parse goals, orchestrate tools, execute API requests, and complete multi-step tasks autonomously.",
     capabilities: [
-      "Handles multi-step tasks end-to-end autonomously",
-      "Uses tools: web search, code execution, database queries",
-      "Remembers context across long workflows",
-      "Escalates to humans only when genuinely stuck",
+      "End-to-end task execution without manual clicks",
+      "Tool integrations: web search, DB queries, code execution",
+      "Context memory across long enterprise workflows",
+      "Human-in-the-loop escalation when confidence is low",
     ],
     example:
-      "A real-estate firm's AI Agent reads incoming lead emails, checks CRM for duplicates, schedules a viewing, sends WhatsApp confirmation, and logs everything — in under 30 seconds.",
+      "A real-estate firm's AI Agent parses inbound lead emails, queries CRM for duplicates, schedules viewings, sends WhatsApp alerts, and updates pipelines in under 15 seconds.",
   },
   {
     icon: Zap,
-    color: "text-amber-600",
-    bg: "bg-amber-50",
-    title: "AI Automation",
-    tagline: "Connect your tools. Eliminate repetitive work.",
+    color: "text-cyan-400",
+    badgeBg: "bg-cyan-950/80 text-cyan-300 border-cyan-500/30",
+    title: "AI Business Automations",
+    tagline: "Connect your enterprise tools. Eliminate repetitive manual tasks.",
     description:
-      "Replace manual, rule-based workflows with intelligent pipelines that handle exceptions, understand natural language, and improve over time.",
+      "Replace rigid rule-based workflows with intelligent pipelines that process unstructured natural language, parse complex documents, and adapt dynamically.",
     capabilities: [
-      "Auto-classify and route customer support tickets",
-      "Generate first-draft reports from raw data",
-      "Extract structured data from PDFs and invoices",
-      "Auto-respond to queries 24/7 in your brand's voice",
+      "Auto-classify & route customer support tickets",
+      "Extract structured data from PDF invoices & contracts",
+      "Generate automated executive summaries & reports",
+      "24/7 brand-aligned response bots across channels",
     ],
     example:
-      "A manufacturer receives 200 supplier invoices weekly. AI reads each PDF, extracts line items, flags anomalies, and pushes approved invoices to accounting — saving 20 hours weekly.",
+      "A manufacturer receives 200+ supplier invoices weekly. AI parses line items, flags price anomalies, and pushes approved invoices to accounting — saving 20+ hours weekly.",
   },
   {
     icon: Database,
-    color: "text-teal-brand",
-    bg: "bg-teal-brand/8",
-    title: "RAG",
-    tagline: "Give AI your knowledge. Get hyper-accurate answers.",
+    color: "text-emerald-400",
+    badgeBg: "bg-emerald-950/80 text-emerald-300 border-emerald-500/30",
+    title: "RAG & Vector Knowledge Hubs",
+    tagline: "Ground AI in your proprietary company data with zero hallucinations.",
     description:
-      "Combines a large language model with your own documents and databases. Instead of guessing, it searches your knowledge base first and generates accurate, cited answers.",
+      "Retrieval-Augmented Generation (RAG) pairs LLMs with your private databases and document repositories. Gives hyper-accurate, cited answers grounded in your data.",
     capabilities: [
-      "Customer support bot trained on your product docs",
-      "Internal HR assistant that knows your exact policies",
-      "Legal Q&A tool grounded in your contracts",
-      "Zero hallucinations — every answer is traceable",
+      "Customer support bot trained on product documentation",
+      "Internal HR & legal Q&A assistant grounded in company policy",
+      "Real-time technical search across engineering codebases",
+      "Verifiable source citations for every generated response",
     ],
     example:
-      "A pharma company's RAG chatbot answers sales reps' questions in plain English with precise, regulation-compliant answers from the product catalogue.",
+      "A pharmaceutical firm's RAG chatbot answers field sales reps' queries in plain English with precise, regulation-compliant answers pulled from product manuals.",
   },
   {
     icon: GitBranch,
-    color: "text-blue-brand",
-    bg: "bg-blue-brand/8",
-    title: "Workflow Automation",
-    tagline: "Connect every tool into one seamless flow.",
+    color: "text-indigo-400",
+    badgeBg: "bg-indigo-950/80 text-indigo-300 border-indigo-500/30",
+    title: "Enterprise Workflow Sync",
+    tagline: "Connect CRM, Google Workspace, ERP, and messaging into one flow.",
     description:
-      "Links your CRM, email, messaging, ERP, and other tools so actions in one automatically trigger actions in others — with AI making intelligent decisions at each step.",
+      "Interlink your software ecosystem so actions in one tool automatically trigger cascading updates across all others — powered by AI validation.",
     capabilities: [
-      "Lead captured → CRM updated → Email sent → Task assigned",
-      "Order placed → Inventory checked → Invoice → Courier booked",
-      "Support ticket → Auto-diagnosed → Routed to right team",
-      "New hire → Accounts created → Onboarding tasks assigned",
+      "Lead capture → CRM update → Email sequence → Sales task",
+      "Order placed → Inventory check → Invoice -> Shipping trigger",
+      "Support ticket → AI diagnosis → Priority queue assignment",
+      "Employee onboarding → Account creation → Access provisioning",
     ],
     example:
-      "A logistics company automates order-to-delivery: driver assignment, route optimisation, customer SMS, delivery confirmation — saving 4 FTEs of coordination.",
+      "A logistics firm automates order-to-delivery: driver assignment, route optimization, customer SMS updates, and proof-of-delivery sync.",
   },
 ];
 
 export default function AISection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const ob = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setVisible(true); },
-      { threshold: 0.08 }
-    );
-    if (ref.current) ob.observe(ref.current);
-    return () => ob.disconnect();
-  }, []);
-
   return (
-    <section id="ai-section" className="relative bg-surface overflow-hidden py-24">
-      {/* Grid lines */}
-      <div className="absolute inset-0 grid-lines-bg pointer-events-none opacity-100" />
+    <section id="ai-section" className="relative bg-slate-950 py-24 border-t border-slate-800/80 overflow-hidden">
+      {/* Glow Effects */}
+      <div className="absolute top-1/4 left-1/3 w-96 h-96 glow-spot-purple opacity-20 blur-3xl pointer-events-none" />
+      <div className="absolute inset-0 dots-pattern-dark opacity-40 pointer-events-none" />
 
-      <div ref={ref} className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
-        <div className={cn(
-          "text-center mb-14 transition-all duration-700",
-          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-        )}>
-          <Badge variant="outline" className="mb-4 text-teal-brand border-teal-brand/30 bg-teal-brand/5 font-heading tracking-widest text-[11px] uppercase">
-            AI & Automation
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <Badge variant="outline" className="mb-4 border-purple-500/30 bg-purple-950/40 text-purple-300 font-mono tracking-widest text-[11px] uppercase py-1 px-3">
+            AI &amp; Automation Architecture
           </Badge>
-          <h2 className="font-heading font-bold text-4xl lg:text-5xl text-navy mb-4">
-            What does AI actually do for your business?
+          <h2 className="font-heading font-extrabold text-4xl sm:text-5xl text-white tracking-tight mb-4">
+            What AI Does for Your Business. <br />
+            <span className="text-gradient-purple">Real Utility, Zero Hype.</span>
           </h2>
-          <p className="text-mid-text text-lg max-w-2xl mx-auto leading-relaxed">
-            AI isn&apos;t a buzzword. For businesses of every size, it&apos;s the most powerful tool
-            for saving time, reducing errors, and scaling operations.
+          <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
+            AI isn&apos;t a gimmick. Built correctly, it is the single most potent lever for reducing operational cost, 
+            eliminating human error, and accelerating workflow speed.
           </p>
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {aiCards.map(({ icon: Icon, color, bg, title, tagline, description, capabilities, example }, i) => (
-            <Card
+        {/* 2x2 AI Capability Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {aiCards.map(({ icon: Icon, color, badgeBg, title, tagline, description, capabilities, example }, i) => (
+            <motion.div
               key={title}
-              className={cn(
-                "border-slate-200 bg-white card-lift overflow-hidden transition-all duration-700",
-                visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              )}
-              style={{ transitionDelay: `${i * 100}ms` }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              className="rounded-3xl glass-card border border-slate-800 p-7 sm:p-8 glass-card-hover flex flex-col justify-between"
             >
-              <CardContent className="p-7">
-                <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center mb-5", bg, color)}>
-                  <Icon className="w-6 h-6" />
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <div className={`w-12 h-12 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center ${color}`}>
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <Badge variant="outline" className={`text-[10px] font-mono uppercase tracking-wider ${badgeBg}`}>
+                    AI Component
+                  </Badge>
                 </div>
-                <h3 className="font-heading font-bold text-xl text-navy mb-1">{title}</h3>
-                <p className="text-teal-brand text-sm font-semibold mb-3">{tagline}</p>
-                <p className="text-mid-text text-sm leading-relaxed mb-5">{description}</p>
 
-                <ul className="space-y-2 mb-5">
-                  {capabilities.map(cap => (
-                    <li key={cap} className="flex items-start gap-2.5 text-sm text-mid-text">
-                      <span className="w-1.5 h-1.5 rounded-full bg-teal-brand flex-shrink-0 mt-1.5" />
-                      {cap}
-                    </li>
+                <h3 className="font-heading font-extrabold text-2xl text-white mb-2">{title}</h3>
+                <p className={`font-heading font-semibold text-sm mb-4 ${color}`}>{tagline}</p>
+                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">{description}</p>
+
+                <div className="space-y-2 mb-6">
+                  {capabilities.map((cap, idx) => (
+                    <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-300">
+                      <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                      <span>{cap}</span>
+                    </div>
                   ))}
-                </ul>
-
-                <Separator className="mb-5 bg-slate-100" />
-
-                {/* Example box */}
-                <div className="rounded-xl border border-dashed border-teal-brand/25 bg-teal-brand/4 p-4">
-                  <p className="text-[11px] font-bold text-teal-brand uppercase tracking-wider mb-1.5">Real Example</p>
-                  <p className="text-mid-text text-sm leading-relaxed italic">{example}</p>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+
+              {/* Real World Example Box */}
+              <div className="rounded-2xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs">
+                <div className="text-[10px] font-bold text-cyan-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                  Real Production Implementation
+                </div>
+                <p className="text-slate-400 text-xs leading-relaxed italic">{example}</p>
+              </div>
+            </motion.div>
           ))}
         </div>
+
       </div>
     </section>
   );
