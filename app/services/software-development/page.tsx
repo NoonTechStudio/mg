@@ -1,8 +1,16 @@
+import type { Metadata } from "next";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import SectionLabel from "../../components/SectionLabel";
 import GridBackground from "../../components/GridBackground";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Custom Software & SaaS Development",
+  description:
+    "Custom SaaS platforms, AI integrations, ERP tools, and REST/GraphQL APIs engineered on Next.js, Node.js, Python, and PostgreSQL — built to scale.",
+  alternates: { canonical: "/services/software-development" },
+};
 
 const capabilities = [
   { icon: "🧩", title: "Custom SaaS Platforms", desc: "Multi-tenant SaaS with billing, user management, and admin dashboards." },

@@ -1,8 +1,16 @@
+import type { Metadata } from "next";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import SectionLabel from "../../components/SectionLabel";
 import GridBackground from "../../components/GridBackground";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Cloud Infrastructure & AI Automations",
+  description:
+    "Google Cloud Platform and Firebase setup, migration, monitoring, and security — plus RAG pipelines and LLM agent automations for business workflows.",
+  alternates: { canonical: "/services/cloud" },
+};
 
 const services = [
   { icon: "☁️", title: "GCP Setup", desc: "Project configuration, IAM, networking, and billing setup on Google Cloud Platform." },

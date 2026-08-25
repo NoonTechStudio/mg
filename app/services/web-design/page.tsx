@@ -1,8 +1,16 @@
+import type { Metadata } from "next";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import SectionLabel from "../../components/SectionLabel";
 import GridBackground from "../../components/GridBackground";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Web Design & Next.js Development",
+  description:
+    "High-converting, ultra-fast websites and e-commerce platforms built on Next.js, React, and Tailwind CSS. UI/UX design, branding, and SEO included.",
+  alternates: { canonical: "/services/web-design" },
+};
 
 const services = [
   { icon: "🎨", title: "UI / UX Design", desc: "User-centred interfaces that convert visitors into customers." },

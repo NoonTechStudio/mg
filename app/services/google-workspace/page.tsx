@@ -1,8 +1,16 @@
+import type { Metadata } from "next";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import SectionLabel from "../../components/SectionLabel";
 import GridBackground from "../../components/GridBackground";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Google Workspace Enterprise Setup & Management",
+  description:
+    "Certified Google Workspace partner offering domain setup, zero-downtime migration, security policy enforcement, and ongoing admin support.",
+  alternates: { canonical: "/services/google-workspace" },
+};
 
 const plans = [
   {

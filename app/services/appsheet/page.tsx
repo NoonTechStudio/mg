@@ -1,8 +1,16 @@
+import type { Metadata } from "next";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import SectionLabel from "../../components/SectionLabel";
 import GridBackground from "../../components/GridBackground";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "AppSheet No-Code Applications",
+  description:
+    "Turn Google Sheets into mobile and web apps for CRM, inventory, HR, and field operations — built on AppSheet with offline mode and GPS tracking.",
+  alternates: { canonical: "/services/appsheet" },
+};
 
 const useCases = [
   { icon: "🏢", title: "Real Estate CRM", desc: "Track leads, properties, viewings, and deals — all from Google Sheets." },
